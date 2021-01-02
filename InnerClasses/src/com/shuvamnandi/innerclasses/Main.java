@@ -1,17 +1,55 @@
 package com.shuvamnandi.innerclasses;
 
+import java.util.Scanner;
+
 public class Main {
+    private static Scanner scanner = new Scanner(System.in);
+    private static Button btnPrint = new Button("Print");
+    private static Button btnSubmit = new Button("Submit");
+
     public static void main(String[] args){
         Gearbox gearbox = new Gearbox(6);
-        Gearbox.Gear first = gearbox.new Gear(1, 12.2);
-        // Gearbox.Gear first = new Gearbox.Gear(1, 12.3); // works if Gear is a static inner class nested within Gearbox
-        // Gearbox.Gear second = new Gearbox.Gear(2, 15.3); // does not work
-        Gearbox.Gear second = gearbox.new Gear(2, 15.3);
-        // Gearbox.Gear third = new gearbox.Gear(3, 17.8); // does not work
-        Gearbox.Gear third = gearbox.new Gear(3, 17.8);
+        System.out.println("Current gear: " + gearbox.getCurrentGear());
+        gearbox.operateClutch(true);
+        gearbox.changeGear(2);
+        System.out.println("Current gear: " + gearbox.getCurrentGear());
+        System.out.println("Speed: " + gearbox.wheelSpeed(1000));
+        gearbox.operateClutch(false);
+        System.out.println("Current gear: " + gearbox.getCurrentGear());
+        System.out.println("Speed: " + gearbox.wheelSpeed(1000));
+        gearbox.changeGear(3);
 
-        System.out.println("Speed: " + first.driveSpeed(1000));
-        System.out.println("Speed: " + second.driveSpeed(1000));
-        System.out.println("Speed: " + third.driveSpeed(1000));
+        class ClickListener implements Button.OnClickListener {
+            public ClickListener() {
+                System.out.println("I've been attached");
+            }
+
+            @Override
+            public void onClick(String title) {
+                System.out.println(title + " button was clicked");
+            }
+        }
+        btnPrint.setOnClickListener(new ClickListener());
+        btnSubmit.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(String title) {
+                System.out.println(title + " button was clicked");
+            }
+        });
+        listen();
+    }
+
+    public static void listen() {
+        boolean quit = false;
+        while (!quit) {
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch(choice){
+                case 0: quit = true;
+                        break;
+                case 1: btnPrint.onClick();
+                        btnSubmit.onClick();
+            }
+        }
     }
 }
