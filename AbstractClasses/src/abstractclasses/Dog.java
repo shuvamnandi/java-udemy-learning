@@ -7,11 +7,11 @@ public class Dog extends Animal {
 
     @Override
     public void eat() {
-        System.out.println("Dog->eat");
+        System.out.println( getName() + " is eating");
     }
 
     @Override
     public void breathe() {
-        System.out.println("Dog->breathe");
+        System.out.println( getName() + " is breathing");
     }
 }
