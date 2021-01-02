@@ -3,6 +3,7 @@ package com.shuvamnandi;
 import com.shuvamnandi.composition.*;
 import com.shuvamnandi.encapsulation.*;
 import com.shuvamnandi.polymorphism.*;
+import com.shuvamnandi.oopfinalchallenge.*;
 
 class Movie {
     private String name;
@@ -158,9 +159,32 @@ public class Main {
         System.out.println(holden.brake());
     }
 
+    public static void finalChallenge(){
+        Hamburger hamburger = new Hamburger("Basic", "Chicken",5.6,"Sourdough");
+        hamburger.addHamburgerAddition1("Tomato", 0.25);
+        hamburger.addHamburgerAddition2("Lettuce", 0.15);
+        hamburger.addHamburgerAddition3("Carrot", 0.1);
+        hamburger.addHamburgerAddition4("Cheese", 0.5);
+
+        HealthyBurger healthyBurger = new HealthyBurger("Bacon", 7.2 );
+        healthyBurger.addHamburgerAddition1("Tomato", 0.25);
+        healthyBurger.addHamburgerAddition2("Lettuce", 0.15);
+        healthyBurger.addHamburgerAddition3("Carrot", 0.1);
+        healthyBurger.addHamburgerAddition4("Cheese", 0.5);
+        healthyBurger.addHealthyAddition1("Egg", 1);
+        healthyBurger.addHealthyAddition2("Lentils", 0.8);
+        System.out.println("Total burger price is : " + healthyBurger.itemizeHamburger());
+
+        DeluxeBurger deluxeBurger = new DeluxeBurger();
+        deluxeBurger.itemizeHamburger();
+        deluxeBurger.addHamburgerAddition1("Lentils", 0.8);
+        System.out.println("Total burger price is : " + deluxeBurger.itemizeHamburger());
+    }
+
     public static void main(String[] args) {
-        // compositionExamples()
+         // compositionExamples();
         // encapsulationExamples();
-        polymorphismExamples();
+        // polymorphismExamples();
+         finalChallenge();
     }
 }
