@@ -20,14 +20,21 @@ public class Main {
         items.add(4);
         printDoubled(items);
         FootballPlayer david = new FootballPlayer("Beckham");
+        FootballPlayer aguero = new FootballPlayer("Aguero");
         BaseballPlayer pat = new BaseballPlayer("Pat");
         CricketPlayer adam = new CricketPlayer("Adam");
 
-        Team<FootballPlayer> adelaideCrows = new Team<>("Adelaide Crows");
-        adelaideCrows.addPlayer(david);
+        Team<FootballPlayer> manchesterUnited = new Team<>("Manchester United");
+        manchesterUnited.addPlayer(david);
         //adelaideCrows.addPlayer(pat); // not allowed to be added
         //adelaideCrows.addPlayer(adam); // not allowed to be added
-        System.out.println("Players in team: " + adelaideCrows.numPlayers());
+        System.out.println("Players in team: " + manchesterUnited.numPlayers());
+
+        Team<FootballPlayer> manchesterCity = new Team<>("Manchester City");
+        manchesterCity.addPlayer(aguero);
+        //adelaideCrows.addPlayer(pat); // not allowed to be added
+        //adelaideCrows.addPlayer(adam); // not allowed to be added
+        System.out.println("Players in team: " + manchesterCity.numPlayers());
 
         Team<BaseballPlayer> chicagoCubs = new Team<>("Chicago Cubs");
         chicagoCubs.addPlayer(pat);
@@ -39,11 +46,16 @@ public class Main {
         //adelaideCrows.addPlayer(adam); // not allowed to be added
         System.out.println("Players in team: " + kolkataKnightRiders.numPlayers());
 
-        Team<String> brokenTeam = new Team<>("This won't work");
+        manchesterUnited.matchResult(manchesterCity, 3, 4);
+        // manchesterUnited.matchResult(kolkataKnightRiders, 3, 4); // Does not work
+        System.out.println("Ranking: " + manchesterUnited.ranking());
+        System.out.println("Ranking: " + manchesterCity.ranking());
+
+        // Team<String> brokenTeam = new Team<>("This won't work");
         // This causes Exception in thread "main" java.lang.ClassCastException:
         // class java.lang.String cannot be cast to class com.shuvamnandi.generics.Player
         // (java.lang.String is in module java.base of loader 'bootstrap';
         // com.shuvamnandi.generics.Player is in unnamed module of loader 'app')
-        brokenTeam.addPlayer("Beckham");
+        // brokenTeam.addPlayer("Beckham");
     }
 }

@@ -2,6 +2,7 @@ package com.shuvamnandi.generics;
 
 import java.util.ArrayList;
 
+// T can also be implementing an Interface
 public class Team<T extends Player> {
     private String name;
     private int played = 0;
@@ -34,21 +35,26 @@ public class Team<T extends Player> {
         return this.members.size();
     }
 
-    public void matchResult(Team opponent, int ourScore, int theirScore) {
+    public void matchResult(Team<T> opponent, int ourScore, int theirScore) {
+        String message;
         if (ourScore > theirScore) {
             this.won++;
+            message = " beat ";
         } else if (ourScore < theirScore) {
             this.lost++;
-        } else{
+            message = " lost to ";
+        } else {
             this.tied++;
+            message = " drew with ";
         }
         this.played++;
-        if(opponent!=null) {
+        if (opponent!=null) {
+            System.out.println(this.getName() + message + opponent.getName());
             opponent.matchResult(null, theirScore, ourScore);
         }
     }
 
-    public int ranking(){
+    public int ranking() {
         return (this.won*3)+this.tied;
     }
 }
