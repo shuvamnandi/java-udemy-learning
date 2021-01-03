@@ -1,5 +1,8 @@
 package com.shuvamnandi;
 
+import com.shuvamnandi.messages.Consumer;
+import com.shuvamnandi.messages.Message;
+import com.shuvamnandi.messages.Producer;
 import com.shuvamnandi.multiplethreads.Countdown;
 import com.shuvamnandi.multiplethreads.CountdownThread;
 import com.shuvamnandi.threads.AnotherThread;
@@ -61,8 +64,18 @@ public class Main {
         countdownThread2.start();
     }
 
+    public static void producerConsumerExamples() {
+        Message message = new Message();
+        Producer producer = new Producer(message);
+        Consumer consumer = new Consumer(message);
+
+        (new Thread(producer)).start();
+        (new Thread(consumer)).start();
+    }
+
     public static void main(String[] args) {
         //basicThreadExamples();
-        multipleThreadsExamples();
+        // multipleThreadsExamples();
+        producerConsumerExamples();
     }
 }
