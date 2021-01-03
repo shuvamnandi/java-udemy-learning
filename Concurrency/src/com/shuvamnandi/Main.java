@@ -48,6 +48,11 @@ public class Main {
 
     public static void multipleThreadsExamples() {
         Countdown countdown = new Countdown();
+        // No interference if there are separate countdown objects
+        // CountdownThread countdownThread1 = new CountdownThread(new Countdown());
+        // countdownThread1.setName("Thread-1");
+        // CountdownThread countdownThread2 = new CountdownThread(new Countdown());
+        // countdownThread1.setName("Thread-2");
         CountdownThread countdownThread1 = new CountdownThread(countdown);
         countdownThread1.setName("Thread-1");
         CountdownThread countdownThread2 = new CountdownThread(countdown);

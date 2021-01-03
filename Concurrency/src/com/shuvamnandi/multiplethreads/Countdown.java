@@ -6,7 +6,9 @@ public class Countdown {
     // Instance variables are stored on the heap, i.e. multiple threads would share this value
     private int i;
 
-    public void doCountdown() {
+    // Adding synchronized keyword to a method ensures that only 1 thread executes this method at a given time
+    // all others are in suspended/waiting state
+    public synchronized void doCountdown() {
         String color;
 
         switch (Thread.currentThread().getName()) {
