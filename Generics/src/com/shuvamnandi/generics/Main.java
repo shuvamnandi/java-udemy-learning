@@ -27,8 +27,24 @@ public class Main {
         adelaideCrows.addPlayer(david);
         //adelaideCrows.addPlayer(pat); // not allowed to be added
         //adelaideCrows.addPlayer(adam); // not allowed to be added
-
         System.out.println("Players in team: " + adelaideCrows.numPlayers());
+
+        Team<BaseballPlayer> chicagoCubs = new Team<>("Chicago Cubs");
+        chicagoCubs.addPlayer(pat);
+        //adelaideCrows.addPlayer(adam); // not allowed to be added
+        System.out.println("Players in team: " + chicagoCubs.numPlayers());
+
+        Team<CricketPlayer> kolkataKnightRiders = new Team<>("Kolkata Knight Riders");
+        kolkataKnightRiders.addPlayer(adam);
+        //adelaideCrows.addPlayer(adam); // not allowed to be added
+        System.out.println("Players in team: " + kolkataKnightRiders.numPlayers());
+
+        Team<String> brokenTeam = new Team<>("This won't work");
+        // This causes Exception in thread "main" java.lang.ClassCastException:
+        // class java.lang.String cannot be cast to class com.shuvamnandi.generics.Player
+        // (java.lang.String is in module java.base of loader 'bootstrap';
+        // com.shuvamnandi.generics.Player is in unnamed module of loader 'app')
+        brokenTeam.addPlayer("Beckham");
     }
 
 
