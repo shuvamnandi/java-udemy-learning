@@ -2,7 +2,7 @@ package com.shuvamnandi.generics;
 
 import java.util.ArrayList;
 
-public class Team<T> {
+public class Team<T extends Player> {
     private String name;
     private int played = 0;
     private int won = 0;
