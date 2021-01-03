@@ -23,4 +23,11 @@ public class Message {
         empty = false;
         this.message = message;
     }
+
+    /*
+     Problem with above setup: Deadlock.
+     Once one of the thread starts looping, the other one cannot change the value of empty as the thread is blocked.
+     Only one thread can execute a synchronized method at a time. So, the first thread that is looping is holding the lock
+     for the message object. The second one is blocked waiting for the first thread to release the lock.
+     */
 }
