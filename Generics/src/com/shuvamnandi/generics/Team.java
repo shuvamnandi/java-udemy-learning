@@ -3,7 +3,7 @@ package com.shuvamnandi.generics;
 import java.util.ArrayList;
 
 // T can also be implementing an Interface
-public class Team<T extends Player> {
+public class Team<T extends Player> implements Comparable<Team<T>>{
     private String name;
     private int played = 0;
     private int won = 0;
@@ -54,7 +54,19 @@ public class Team<T extends Player> {
         }
     }
 
-    public int ranking() {
+    public int points() {
         return (this.won*3)+this.tied;
+    }
+
+    // Helpful to have compareTo method implemented
+    // to perform sort on an ArrayList<Team> variable using Collections.sort
+    @Override
+    public int compareTo(Team<T> team) {
+        if (this.points() > team.points()) {
+            return -1;
+        } else if (this.points() < team.points()) {
+            return 1;
+        }
+        return 0;
     }
 }

@@ -48,8 +48,11 @@ public class Main {
 
         manchesterUnited.matchResult(manchesterCity, 3, 4);
         // manchesterUnited.matchResult(kolkataKnightRiders, 3, 4); // Does not work
-        System.out.println("Ranking: " + manchesterUnited.ranking());
-        System.out.println("Ranking: " + manchesterCity.ranking());
+        System.out.println(manchesterUnited.getName() + " : " + manchesterUnited.points());
+        System.out.println(manchesterCity.getName() + " : " + manchesterCity.points());
+        System.out.println(manchesterUnited.compareTo(manchesterCity));
+        System.out.println(manchesterUnited.compareTo(manchesterUnited));
+        System.out.println(manchesterCity.compareTo(manchesterUnited));
 
         // Team<String> brokenTeam = new Team<>("This won't work");
         // This causes Exception in thread "main" java.lang.ClassCastException:
