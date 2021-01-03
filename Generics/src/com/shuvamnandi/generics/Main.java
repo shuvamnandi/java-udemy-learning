@@ -21,6 +21,7 @@ public class Main {
         printDoubled(items);
         FootballPlayer david = new FootballPlayer("Beckham");
         FootballPlayer aguero = new FootballPlayer("Aguero");
+        FootballPlayer salah = new FootballPlayer("Salah");
         BaseballPlayer pat = new BaseballPlayer("Pat");
         CricketPlayer adam = new CricketPlayer("Adam");
 
@@ -32,9 +33,11 @@ public class Main {
 
         Team<FootballPlayer> manchesterCity = new Team<>("Manchester City");
         manchesterCity.addPlayer(aguero);
-        //adelaideCrows.addPlayer(pat); // not allowed to be added
-        //adelaideCrows.addPlayer(adam); // not allowed to be added
         System.out.println("Players in team: " + manchesterCity.numPlayers());
+
+        Team<FootballPlayer> liverpool = new Team<>("Liverpool");
+        liverpool.addPlayer(salah);
+        System.out.println("Players in team: " + liverpool.numPlayers());
 
         Team<BaseballPlayer> chicagoCubs = new Team<>("Chicago Cubs");
         chicagoCubs.addPlayer(pat);
@@ -46,13 +49,18 @@ public class Main {
         //adelaideCrows.addPlayer(adam); // not allowed to be added
         System.out.println("Players in team: " + kolkataKnightRiders.numPlayers());
 
-        manchesterUnited.matchResult(manchesterCity, 3, 4);
+        manchesterUnited.matchResult(manchesterCity, 3, 3);
+        manchesterCity.matchResult(liverpool, 3, 2);
+        liverpool.matchResult(manchesterUnited, 2, 0);
         // manchesterUnited.matchResult(kolkataKnightRiders, 3, 4); // Does not work
-        System.out.println(manchesterUnited.getName() + " : " + manchesterUnited.points());
-        System.out.println(manchesterCity.getName() + " : " + manchesterCity.points());
+        System.out.println(manchesterUnited.getName() + " : " + manchesterUnited.ranking());
+        System.out.println(manchesterCity.getName() + " : " + manchesterCity.ranking());
+        System.out.println(liverpool.getName() + " : " + liverpool.ranking());
+
         System.out.println(manchesterUnited.compareTo(manchesterCity));
-        System.out.println(manchesterUnited.compareTo(manchesterUnited));
+        System.out.println(manchesterUnited.compareTo(manchesterCity));
         System.out.println(manchesterCity.compareTo(manchesterUnited));
+        System.out.println(liverpool.compareTo(manchesterUnited));
 
         // Team<String> brokenTeam = new Team<>("This won't work");
         // This causes Exception in thread "main" java.lang.ClassCastException:
@@ -60,5 +68,29 @@ public class Main {
         // (java.lang.String is in module java.base of loader 'bootstrap';
         // com.shuvamnandi.generics.Player is in unnamed module of loader 'app')
         // brokenTeam.addPlayer("Beckham");
+
+        League<Team<FootballPlayer>> epl = new League<>("English Premier League");
+        epl.addTeam(manchesterCity);
+        epl.addTeam(manchesterUnited);
+        epl.addTeam(liverpool);
+        // epl.addTeam(kolkataKnightRiders); // not allowed as only Team<FootballPlayer> is allowed, not Team<CricketPlayer>
+        epl.showLeagueTable();
+
+        Team rawTeam = new Team("Raw Team");
+        rawTeam.addPlayer(salah);
+        rawTeam.addPlayer(david);
+        rawTeam.addPlayer(adam);
+
+        epl.addTeam(rawTeam); // Unchecked warning
+
+        League<Team> rawLeague = new League<>("Raw League");
+        rawLeague.addTeam(liverpool); // no warning
+        rawLeague.addTeam(chicagoCubs); // no warning
+        rawLeague.addTeam(rawTeam); // no warning
+
+        League reallyRawLeague = new League("Really Raw League");
+        reallyRawLeague.addTeam(manchesterCity); // unchecked warning
+        reallyRawLeague.addTeam(kolkataKnightRiders); // unchecked warning
+        reallyRawLeague.addTeam(rawTeam); // unchecked warning
     }
 }

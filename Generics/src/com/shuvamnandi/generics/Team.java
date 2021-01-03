@@ -54,7 +54,7 @@ public class Team<T extends Player> implements Comparable<Team<T>>{
         }
     }
 
-    public int points() {
+    public int ranking() {
         return (this.won*3)+this.tied;
     }
 
@@ -62,9 +62,9 @@ public class Team<T extends Player> implements Comparable<Team<T>>{
     // to perform sort on an ArrayList<Team> variable using Collections.sort
     @Override
     public int compareTo(Team<T> team) {
-        if (this.points() > team.points()) {
+        if (this.ranking() > team.ranking()) {
             return -1;
-        } else if (this.points() < team.points()) {
+        } else if (this.ranking() < team.ranking()) {
             return 1;
         }
         return 0;
