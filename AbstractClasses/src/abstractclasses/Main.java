@@ -1,6 +1,7 @@
 package abstractclasses;
 
 public class Main {
+    // TODO: Complete code for challenge on Inner Classes and Abstract Classes
     public static void main(String[] args) {
         Animal dog = new Dog("Tommy");
         dog.eat();
