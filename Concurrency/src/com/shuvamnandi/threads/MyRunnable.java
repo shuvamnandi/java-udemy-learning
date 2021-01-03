@@ -1,6 +1,6 @@
 package com.shuvamnandi.threads;
 
-import static com.shuvamnandi.threads.ThreadColor.ANSI_PURPLE;
+import static com.shuvamnandi.ThreadColor.ANSI_PURPLE;
 
 public class MyRunnable implements Runnable {
     @Override

@@ -1,6 +1,6 @@
 package com.shuvamnandi.threads;
 
-import static com.shuvamnandi.threads.ThreadColor.ANSI_BLUE;
+import static com.shuvamnandi.ThreadColor.ANSI_BLUE;
 
 public class AnotherThread extends Thread {
     @Override
