@@ -46,6 +46,4 @@ public class Main {
         // com.shuvamnandi.generics.Player is in unnamed module of loader 'app')
         brokenTeam.addPlayer("Beckham");
     }
-
-
 }

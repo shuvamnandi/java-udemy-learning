@@ -21,11 +21,11 @@ public class Team<T extends Player> {
 
     public boolean addPlayer(T player) {
         if (this.members.contains(player)) {
-            System.out.println(((Player)player).getName() + " is already on this team");
+            System.out.println(player.getName() + " is already on this team");
             return false;
         } else {
             this.members.add(player);
-            System.out.println(((Player)player).getName()+ " picked for team " + name);
+            System.out.println(player.getName()+ " picked for team " + name);
             return true;
         }
     }
@@ -43,7 +43,7 @@ public class Team<T extends Player> {
             this.tied++;
         }
         this.played++;
-        if(opponent!=null){
+        if(opponent!=null) {
             opponent.matchResult(null, theirScore, ourScore);
         }
     }
