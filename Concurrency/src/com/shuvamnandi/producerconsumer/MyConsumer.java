@@ -32,14 +32,16 @@ public class MyConsumer implements Runnable {
         causing thread interference and leading to an IndexOutOfBoundsException.
          */
         while(true) {
-            if (buffer.isEmpty()) {
-                continue; // skip this iteration of the while loop
-            }
-            if (buffer.get(0).equals("EOF")) {
-                System.out.println(printColor + "Exiting...");
-                break;
-            } else {
-                System.out.println(printColor + "Removed " + buffer.remove(0));
+            synchronized (buffer) {
+                if (buffer.isEmpty()) {
+                    continue; // skip this iteration of the while loop
+                }
+                if (buffer.get(0).equals("EOF")) {
+                    System.out.println(printColor + "Exiting...");
+                    break;
+                } else {
+                    System.out.println(printColor + "Removed " + buffer.remove(0));
+                }
             }
         }
     }
