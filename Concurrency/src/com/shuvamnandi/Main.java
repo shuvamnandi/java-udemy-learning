@@ -12,8 +12,7 @@ import com.shuvamnandi.threads.MyRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static com.shuvamnandi.ThreadColor.*;
@@ -110,6 +109,21 @@ public class Main {
         executorService.execute(myConsumer1);
         executorService.execute(myConsumer2);
 
+        Future<String> futureResult = executorService.submit(new Callable<String>() {
+            public String call() throws Exception {
+                System.out.println(ANSI_GREEN + "I'm being called from the Callable class");
+                return "This is the callable result";
+            }
+        });
+
+        try {
+            System.out.println(ANSI_CYAN + "Result from future: " + futureResult.get());
+        } catch (ExecutionException e) {
+            System.out.println("Something went wrong in the future.get call");
+        } catch (InterruptedException e) {
+            System.out.println("Interrupted the future.get call");
+        }
+
         executorService.shutdown();
         /*
         Implementations of ExecutorService interface manage threads for us, so that we don't have to explicitly create
@@ -130,6 +144,10 @@ public class Main {
         run a task it won't be able to run it straight away. For example, if the maximum number of threads has been set
         to 20, there may already be 20 active threads when we submitted a task. In that case, the task will have to wait
         on the services queue until one of the active threads actually terminates.
+        Using an executive service for this application is overkill, but it's vital for applications that use a large
+        number of threads because using them allows the JVM to optimize thread management.
+        We can use the submit method on the ExecutorService object, which accepts a Callable object, very similar to a
+        Runnable object, except that it can return a value the value can be returned as an object of type Future.
          */
     }
     public static void main(String[] args) {
