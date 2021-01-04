@@ -53,10 +53,12 @@ public class MyConsumer implements Runnable {
             // The whole code is a critical section as we want this whole block of code as a single unit
             bufferLock.lock();
             if (buffer.isEmpty()) {
+                bufferLock.unlock();
                 continue; // skip this iteration of the while loop
             }
             if (buffer.get(0).equals("EOF")) {
                 System.out.println(printColor + "Exiting...");
+                bufferLock.unlock();
                 break;
             } else {
                 System.out.println(printColor + "Removed " + buffer.remove(0));
