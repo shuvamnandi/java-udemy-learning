@@ -12,6 +12,8 @@ import com.shuvamnandi.threads.MyRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static com.shuvamnandi.ThreadColor.*;
@@ -94,10 +96,47 @@ public class Main {
         new Thread(myConsumer2).start();
     }
 
+    public static void executerServiceExample() {
+        List<String> buffer = new ArrayList<>(); // a thread-unsafe collection is used as an example
+        ReentrantLock bufferLock = new ReentrantLock(true); // this accepts a fairness parameter to try to wake up a thread that has been waiting for the longest time
+
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+
+        MyProducer myProducer = new MyProducer(buffer, ANSI_BLUE, bufferLock);
+        MyConsumer myConsumer1 = new MyConsumer(buffer, ANSI_GREEN, bufferLock);
+        MyConsumer myConsumer2 = new MyConsumer(buffer, ANSI_RED, bufferLock);
+
+        executorService.execute(myProducer);
+        executorService.execute(myConsumer1);
+        executorService.execute(myConsumer2);
+
+
+        /*
+        Implementations of ExecutorService interface manage threads for us, so that we don't have to explicitly create
+        and start threads.The implementation is provided by the JDK to manage things like thread scheduling, and they
+        also optimize the creation of threads (which can generally be expensive in terms of performance and memory).
+        However, we still have to provide runnable objects to the service because we still have to code the tasks
+        we want to execute on background threads, but we don't directly manage any threads as such.
+        The executive service implementations allow us to focus on the code we want to run without the fuss of
+        managing threads and their life cycles.
+        We create an implementation of executive service and give it the tasks we want to run, without worrying about
+        the details of how the tasks will actually be run. The executive service implementations makes use of thread pools.
+        Thread pool is a managed set of threads. A thread pool is a managed set of threads.
+        It reduces the overhead of thread creation, especially in applications that use a large number of threads.
+        A thread pool may also limit the number of threads that are active, running or blocked at any one particular time.
+        When using a certain types of thread pool, an application can't run wild and create an excessive number of threads.
+        In Java, we use thread polls through the executive service implementations.
+        Since thread pools can limit the number of active threads, it's possible that when we asked the service to
+        run a task it won't be able to run it straight away. For example, if the maximum number of threads has been set
+        to 20, there may already be 20 active threads when we submitted a task. In that case, the task will have to wait
+        on the services queue until one of the active threads actually terminates.
+         */
+    }
     public static void main(String[] args) {
         // basicThreadExamples();
         // multipleThreadsExamples();
         // messageWithDeadlockExamples();
-        producerConsumerExamples();
+        // producerConsumerExamples();
+        executerServiceExample();
     }
 }
