@@ -1,14 +1,17 @@
 package com.shuvamnandi.producerconsumer;
 
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MyConsumer implements Runnable {
     private List<String> buffer;
     private String printColor;
+    private ReentrantLock bufferLock;
 
-    public MyConsumer(List<String> buffer, String printColor) {
+    public MyConsumer(List<String> buffer, String printColor, ReentrantLock bufferLock) {
         this.buffer = buffer;
         this.printColor = printColor;
+        this.bufferLock = bufferLock;
     }
 
     @Override
@@ -48,17 +51,17 @@ public class MyConsumer implements Runnable {
          */
         while(true) {
             // The whole code is a critical section as we want this whole block of code as a single unit
-            synchronized (buffer) {
-                if (buffer.isEmpty()) {
-                    continue; // skip this iteration of the while loop
-                }
-                if (buffer.get(0).equals("EOF")) {
-                    System.out.println(printColor + "Exiting...");
-                    break;
-                } else {
-                    System.out.println(printColor + "Removed " + buffer.remove(0));
-                }
+            bufferLock.lock();
+            if (buffer.isEmpty()) {
+                continue; // skip this iteration of the while loop
             }
+            if (buffer.get(0).equals("EOF")) {
+                System.out.println(printColor + "Exiting...");
+                break;
+            } else {
+                System.out.println(printColor + "Removed " + buffer.remove(0));
+            }
+            bufferLock.unlock();
         }
     }
 }

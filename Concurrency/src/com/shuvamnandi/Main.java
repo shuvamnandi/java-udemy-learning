@@ -12,6 +12,7 @@ import com.shuvamnandi.threads.MyRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static com.shuvamnandi.ThreadColor.*;
 
@@ -80,9 +81,13 @@ public class Main {
 
     public static void producerConsumerExamples() {
         List<String> buffer = new ArrayList<>(); // a thread-unsafe collection is used as an example
-        MyProducer myProducer = new MyProducer(buffer, ANSI_BLUE);
-        MyConsumer myConsumer1 = new MyConsumer(buffer, ANSI_GREEN);
-        MyConsumer myConsumer2 = new MyConsumer(buffer, ANSI_RED);
+
+        // Reentrant lock - if a thread is already holding a reentrant lock when it reaches the code that requires the
+        // same lock, it can continue executing it and it doesn't have to obtain the lock again.
+        ReentrantLock bufferLock = new ReentrantLock();
+        MyProducer myProducer = new MyProducer(buffer, ANSI_BLUE, bufferLock);
+        MyConsumer myConsumer1 = new MyConsumer(buffer, ANSI_GREEN, bufferLock);
+        MyConsumer myConsumer2 = new MyConsumer(buffer, ANSI_RED, bufferLock);
 
         new Thread(myProducer).start();
         new Thread(myConsumer1).start();
