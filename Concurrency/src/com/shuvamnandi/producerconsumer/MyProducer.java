@@ -25,7 +25,7 @@ public class MyProducer implements Runnable {
                     buffer.add(number);
                 }
                 Thread.sleep(random.nextInt(1000));
-            } catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 System.out.println(printColor + "Producer was interrupted");
             }
         }

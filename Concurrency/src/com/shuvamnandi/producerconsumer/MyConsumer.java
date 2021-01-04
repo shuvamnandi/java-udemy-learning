@@ -30,8 +30,24 @@ public class MyConsumer implements Runnable {
         and again that can happen in the case of them being synchronized and thread safe.
         This is what happens in the below case, 2 consumer threads try to remove the same data from the buffer,
         causing thread interference and leading to an IndexOutOfBoundsException.
+
+        However, synchronization does have some drawbacks.
+        1. Threads that are blocked waiting to execute synchronize code can't be interrupted. Once they're blocked
+        they are stuck there until they get the lock for the object the code is synchronizing on.
+        2. The synchronized block must be within the same method. In other words, we can't start a synchronized block
+        in one method and end the synchronization block in another for obvious reasons.
+        3. We can't test to see if an object's intrinsic lock is available or find out any other information about
+        that lock. Also, if the lock isn't available we can't timeout after we waited for the lock for a while.
+        When we reach the beginning of a synchronized block, we can either get the lock and continue executing,
+        or block at that line of code until we get the lock.
+        4. If multiple threads are waiting to get a lock, it's not on first come first served basis. There isn't a set
+        order in which the JVM will choose the next thread that gets the lock, so the first thread that blocked could be
+        the last thread to get the lock and vice versa.
+        Therefore, instead of using synchronization we can prevent thread interference using classes that implement the
+        java.util.concurrent locks.lock interface
          */
         while(true) {
+            // The whole code is a critical section as we want this whole block of code as a single unit
             synchronized (buffer) {
                 if (buffer.isEmpty()) {
                     continue; // skip this iteration of the while loop
