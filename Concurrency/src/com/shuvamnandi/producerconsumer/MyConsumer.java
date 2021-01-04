@@ -49,24 +49,31 @@ public class MyConsumer implements Runnable {
         Therefore, instead of using synchronization we can prevent thread interference using classes that implement the
         java.util.concurrent locks.lock interface
          */
+        int counter = 0; // Store the no. of times the counter was not acquired
         while(true) {
             // The whole code is a critical section as we want this whole block of code as a single unit
-            bufferLock.lock(); // This remains outside of the try finally
-            // Add a try-finally block to ensure that bufferLock.unlock() is always called, with only 1 call needed
-            try {
-                if (buffer.isEmpty()) {
-                    continue; // skip this iteration of the while loop
+            // This remains outside of the try finally
+            if (bufferLock.tryLock()) { // Returns true if lock is acquired and executes the following section of code
+                // Add a try-finally block to ensure that bufferLock.unlock() is always called, with only 1 call needed
+                try {
+                    if (buffer.isEmpty()) {
+                        continue; // skip this iteration of the while loop
+                    }
+                    System.out.println(printColor + "Counter: " + counter);
+                    counter = 0;
+                    if (buffer.get(0).equals("EOF")) {
+                        System.out.println(printColor + "Exiting...");
+                        break;
+                    } else {
+                        System.out.println(printColor + "Removed " + buffer.remove(0));
+                    }
+                } finally {
+                    bufferLock.unlock();
                 }
-                if (buffer.get(0).equals("EOF")) {
-                    System.out.println(printColor + "Exiting...");
-                    break;
-                } else {
-                    System.out.println(printColor + "Removed " + buffer.remove(0));
-                }
-            } finally {
-                bufferLock.unlock();
             }
-
+            else {
+                counter++;
+            }
         }
     }
 }

@@ -84,7 +84,7 @@ public class Main {
 
         // Reentrant lock - if a thread is already holding a reentrant lock when it reaches the code that requires the
         // same lock, it can continue executing it and it doesn't have to obtain the lock again.
-        ReentrantLock bufferLock = new ReentrantLock();
+        ReentrantLock bufferLock = new ReentrantLock(true); // this accepts a fairness parameter to try to wake up a thread that has been waiting for the longest time
         MyProducer myProducer = new MyProducer(buffer, ANSI_BLUE, bufferLock);
         MyConsumer myConsumer1 = new MyConsumer(buffer, ANSI_GREEN, bufferLock);
         MyConsumer myConsumer2 = new MyConsumer(buffer, ANSI_RED, bufferLock);
