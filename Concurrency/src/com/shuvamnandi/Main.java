@@ -99,7 +99,7 @@ public class Main {
         List<String> buffer = new ArrayList<>(); // a thread-unsafe collection is used as an example
         ReentrantLock bufferLock = new ReentrantLock(true); // this accepts a fairness parameter to try to wake up a thread that has been waiting for the longest time
 
-        ExecutorService executorService = Executors.newFixedThreadPool(3);
+        ExecutorService executorService = Executors.newFixedThreadPool(3); // only allows 3 active threads at a time
 
         MyProducer myProducer = new MyProducer(buffer, ANSI_BLUE, bufferLock);
         MyConsumer myConsumer1 = new MyConsumer(buffer, ANSI_GREEN, bufferLock);
