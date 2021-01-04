@@ -29,7 +29,7 @@ public class Countdown {
 
         // Pass in an object (instance variable) to synchronized to lock this block of code to avoid race condition between multiple threads
         // Passing in a local variable does not help
-        // Static methods can also be synchronized
+        // Static methods can also be synchronized and can also use synchronize on static objects
         // We must synchronize only the code that needs synchronization, to an absolute minimum
         synchronized(this) {
             // Local variables are stored on the thread stack, i.e. each thread has its own copy of these.
@@ -42,5 +42,11 @@ public class Countdown {
         // 2. Before the i-- decrement
         // 3. Before the System.out.println statement
         // 4. During the System.out.println statement
+
+        // Atomic Operations in Java, during the execution of which a thread cannot be suspended
+        // 1. Reading or writing reference variables, e.g. myObject1 = myObject2
+        // 2. Reading or writing primitive variables (except for type long and double, which require 2 operations), e.g. myInt = 10
+        // 3. Reading or writing all variables declared volatile
+        // 4. Reading or writing a thread-safe Java Collections object, e.g. Vector is thread-safe but ArrayList is not thread-safe
     }
 }

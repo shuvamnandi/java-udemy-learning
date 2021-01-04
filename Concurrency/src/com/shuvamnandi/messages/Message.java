@@ -9,19 +9,31 @@ public class Message {
     // to be called by consumer
     public synchronized String read() {
         while(empty) {
+            try {
+                wait();
+                // Suspend its execution and release the lock it's holding, repeat as long as the empty check is True
+                // i.e. wait for data to come in from MyWriter thread calling Message.write()
+            } catch (InterruptedException e) {
 
+            }
         }
         empty = true;
+        notifyAll(); // Signal the other waiting thread to wake up
         return message;
     }
 
     // to be called by producer
     public synchronized void write(String message) {
         while(!empty) {
+            try {
+                wait();  // Suspend its execution and release the lock it's holding
+            } catch (InterruptedException e) {
 
+            }
         }
         empty = false;
         this.message = message;
+        notifyAll(); // Signal the other waiting thread to wake up
     }
 
     /*

@@ -2,10 +2,10 @@ package com.shuvamnandi.messages;
 
 import java.util.Random;
 
-public class Consumer implements Runnable {
+public class MyReader implements Runnable {
     private Message message;
 
-    public Consumer(Message message) {
+    public MyReader(Message message) {
         this.message = message;
     }
 

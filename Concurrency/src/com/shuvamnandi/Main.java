@@ -1,8 +1,8 @@
 package com.shuvamnandi;
 
-import com.shuvamnandi.messages.Consumer;
+import com.shuvamnandi.messages.MyReader;
 import com.shuvamnandi.messages.Message;
-import com.shuvamnandi.messages.Producer;
+import com.shuvamnandi.messages.MyWriter;
 import com.shuvamnandi.multiplethreads.Countdown;
 import com.shuvamnandi.multiplethreads.CountdownThread;
 import com.shuvamnandi.threads.AnotherThread;
@@ -66,11 +66,11 @@ public class Main {
 
     public static void producerConsumerExamples() {
         Message message = new Message();
-        Producer producer = new Producer(message);
-        Consumer consumer = new Consumer(message);
+        MyWriter myWriter = new MyWriter(message);
+        MyReader myReader = new MyReader(message);
 
-        (new Thread(producer)).start();
-        (new Thread(consumer)).start();
+        (new Thread(myWriter)).start();
+        (new Thread(myReader)).start();
     }
 
     public static void main(String[] args) {
