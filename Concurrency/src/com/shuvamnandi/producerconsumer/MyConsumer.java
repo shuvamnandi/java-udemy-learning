@@ -61,7 +61,9 @@ public class MyConsumer implements Runnable {
             } else {
                 System.out.println(printColor + "Removed " + buffer.remove(0));
             }
-            bufferLock.unlock();
+            bufferLock.unlock(); // The bufferLock.unlock() code is never called as buffer.isEmpty() is True
+            // and it keeps getting skipped by calling continue in line 56, which causes the thread to continue to
+            // acquire the lock. We never released the lock eventually leading to Maximum lock count exceeded exception thrown.
         }
     }
 }
