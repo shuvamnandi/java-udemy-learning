@@ -1,5 +1,7 @@
 package com.shuvamnandi;
 
+import com.shuvamnandi.arrayblockingqueue.MyConsumerWithArrayBlockingQueue;
+import com.shuvamnandi.arrayblockingqueue.MyProducerWithArrayBlockingQueue;
 import com.shuvamnandi.messages.MyReader;
 import com.shuvamnandi.messages.Message;
 import com.shuvamnandi.messages.MyWriter;
@@ -150,11 +152,26 @@ public class Main {
         Runnable object, except that it can return a value the value can be returned as an object of type Future.
          */
     }
+
+    public static void arrayBlockingQueueExamples() {
+        ArrayBlockingQueue<String> buffer = new ArrayBlockingQueue<>(10); // ArrayBlockingQueue with a capacity of elements it can hold at a time
+
+        MyProducerWithArrayBlockingQueue myProducer = new MyProducerWithArrayBlockingQueue(buffer, ANSI_BLUE);
+        MyConsumerWithArrayBlockingQueue myConsumer1 = new MyConsumerWithArrayBlockingQueue(buffer, ANSI_GREEN);
+        MyConsumerWithArrayBlockingQueue myConsumer2 = new MyConsumerWithArrayBlockingQueue(buffer, ANSI_RED);
+
+        new Thread(myProducer).start();
+        new Thread(myConsumer1).start();
+        new Thread(myConsumer2).start();
+    }
+
+
     public static void main(String[] args) {
         // basicThreadExamples();
         // multipleThreadsExamples();
         // messageWithDeadlockExamples();
         // producerConsumerExamples();
-        executerServiceExample();
+        //executerServiceExample();
+        arrayBlockingQueueExamples();
     }
 }
