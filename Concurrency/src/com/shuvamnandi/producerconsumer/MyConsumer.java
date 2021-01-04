@@ -51,21 +51,22 @@ public class MyConsumer implements Runnable {
          */
         while(true) {
             // The whole code is a critical section as we want this whole block of code as a single unit
-            bufferLock.lock();
-            if (buffer.isEmpty()) {
+            bufferLock.lock(); // This remains outside of the try finally
+            // Add a try-finally block to ensure that bufferLock.unlock() is always called, with only 1 call needed
+            try {
+                if (buffer.isEmpty()) {
+                    continue; // skip this iteration of the while loop
+                }
+                if (buffer.get(0).equals("EOF")) {
+                    System.out.println(printColor + "Exiting...");
+                    break;
+                } else {
+                    System.out.println(printColor + "Removed " + buffer.remove(0));
+                }
+            } finally {
                 bufferLock.unlock();
-                continue; // skip this iteration of the while loop
             }
-            if (buffer.get(0).equals("EOF")) {
-                System.out.println(printColor + "Exiting...");
-                bufferLock.unlock();
-                break;
-            } else {
-                System.out.println(printColor + "Removed " + buffer.remove(0));
-            }
-            bufferLock.unlock(); // The bufferLock.unlock() code is never called as buffer.isEmpty() is True
-            // and it keeps getting skipped by calling continue in line 56, which causes the thread to continue to
-            // acquire the lock. We never released the lock eventually leading to Maximum lock count exceeded exception thrown.
+
         }
     }
 }

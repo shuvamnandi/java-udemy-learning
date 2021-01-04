@@ -25,8 +25,13 @@ public class MyProducer implements Runnable {
             try {
                 System.out.println(printColor + "Adding..." + number);
                 bufferLock.lock(); // Acquire the lock - it will either get the lock or it will be suspended until it can get the lock
-                buffer.add(number);
-                bufferLock.unlock(); // Release the lock - this must be managed by developers
+                // This remains outside of the try finally
+                // Add a try-finally block to ensure that bufferLock.unlock() is always called, with only 1 call needed
+                try {
+                    buffer.add(number);
+                } finally {
+                    bufferLock.unlock(); // Release the lock - this must be managed by developers
+                }
                 Thread.sleep(random.nextInt(1000));
             } catch (InterruptedException e) {
                 System.out.println(printColor + "Producer was interrupted");
@@ -34,7 +39,12 @@ public class MyProducer implements Runnable {
         }
         System.out.println(printColor + "Adding EOF and exiting....");
         bufferLock.lock();
-        buffer.add("EOF");
-        bufferLock.unlock();
+        // This remains outside of the try finally
+        // Add a try-finally block to ensure that bufferLock.unlock() is always called, with only 1 call needed
+        try {
+            buffer.add("EOF");
+        } finally {
+            bufferLock.unlock(); // Release the lock - this must be managed by developers
+        }
     }
 }
