@@ -110,7 +110,7 @@ public class Main {
         executorService.execute(myConsumer1);
         executorService.execute(myConsumer2);
 
-
+        executorService.shutdown();
         /*
         Implementations of ExecutorService interface manage threads for us, so that we don't have to explicitly create
         and start threads.The implementation is provided by the JDK to manage things like thread scheduling, and they
