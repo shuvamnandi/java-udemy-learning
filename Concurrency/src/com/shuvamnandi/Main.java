@@ -5,8 +5,13 @@ import com.shuvamnandi.messages.Message;
 import com.shuvamnandi.messages.MyWriter;
 import com.shuvamnandi.multiplethreads.Countdown;
 import com.shuvamnandi.multiplethreads.CountdownThread;
+import com.shuvamnandi.producerconsumer.MyConsumer;
+import com.shuvamnandi.producerconsumer.MyProducer;
 import com.shuvamnandi.threads.AnotherThread;
 import com.shuvamnandi.threads.MyRunnable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.shuvamnandi.ThreadColor.*;
 
@@ -64,7 +69,7 @@ public class Main {
         countdownThread2.start();
     }
 
-    public static void producerConsumerExamples() {
+    public static void messageWithDeadlockExamples() {
         Message message = new Message();
         MyWriter myWriter = new MyWriter(message);
         MyReader myReader = new MyReader(message);
@@ -73,9 +78,21 @@ public class Main {
         (new Thread(myReader)).start();
     }
 
+    public static void producerConsumerExamples() {
+        List<String> buffer = new ArrayList<>(); // a thread-unsafe collection is used as an example
+        MyProducer myProducer = new MyProducer(buffer, ANSI_BLUE);
+        MyConsumer myConsumer1 = new MyConsumer(buffer, ANSI_GREEN);
+        MyConsumer myConsumer2 = new MyConsumer(buffer, ANSI_RED);
+
+        new Thread(myProducer).start();
+        new Thread(myConsumer1).start();
+        new Thread(myConsumer2).start();
+    }
+
     public static void main(String[] args) {
-        //basicThreadExamples();
+        // basicThreadExamples();
         // multipleThreadsExamples();
+        // messageWithDeadlockExamples();
         producerConsumerExamples();
     }
 }
