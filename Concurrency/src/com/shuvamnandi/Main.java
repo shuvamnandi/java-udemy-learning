@@ -233,11 +233,11 @@ public class Main {
         lock, and when the lock becomes available, the operating system chooses one of those blocked threads to run,
         especially when one of the other threads has a higher priority than the first thread that was blocked.
          */
-        Object lock = new Object();
+        ReentrantLock lock = new ReentrantLock(true);
         Thread t1 = new Thread(new Worker(ANSI_BLUE, lock), "Priority 10");
         Thread t2 = new Thread(new Worker(ANSI_GREEN, lock), "Priority 8");
         Thread t3 = new Thread(new Worker(ANSI_YELLOW, lock), "Priority 6");
-        Thread t4 = new Thread(new Worker(ANSI_WHITE, lock), "Priority 4");
+        Thread t4 = new Thread(new Worker(ANSI_CYAN, lock), "Priority 4");
         Thread t5 = new Thread(new Worker(ANSI_RED, lock), "Priority 2");
 
         t1.setPriority(10);
