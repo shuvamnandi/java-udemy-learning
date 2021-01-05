@@ -2,6 +2,8 @@ package com.shuvamnandi;
 
 import com.shuvamnandi.arrayblockingqueue.MyConsumerWithArrayBlockingQueue;
 import com.shuvamnandi.arrayblockingqueue.MyProducerWithArrayBlockingQueue;
+import com.shuvamnandi.deadlocks.Thread1;
+import com.shuvamnandi.deadlocks.Thread2;
 import com.shuvamnandi.messages.MyReader;
 import com.shuvamnandi.messages.Message;
 import com.shuvamnandi.messages.MyWriter;
@@ -165,13 +167,45 @@ public class Main {
         new Thread(myConsumer2).start();
     }
 
+    public static void deadlockExamples() {
+        /*
+        Deadlocks occur when two or more threads are blocked on locks and every thread that's blocked is
+        holding a lock that another block thread wants. For example, thread 1 is holding lock 1 and waiting
+        to acquire lock 2 but thread 2 is holding lock 2 and waiting to acquire lock 1.
+        Because all the threads holding the locks are blocked, they will never release the locks they're
+        holding and so none of the waiting threads will actually ever run.
+         */
+        Object lock1 = new Object();
+        Object lock2 = new Object();
+
+        Thread1 thread1 = new Thread1(lock1, lock2);
+        Thread2 thread2 = new Thread2(lock1, lock2);
+
+        thread1.start();
+        thread2.start();
+        /*
+        How the deadlock happened:
+        Thread 1 obtained lock 1 then called sleep and got suspended.
+        Thread 2 then ran and obtained lock 2 and then called sleep and got suspended.
+        Thread 1 woke up and tried to obtain lock 2 but thread 2 is holding lock 2 so thread 1 blocks.
+        Then thread 2 wakes up and tries to obtain lock 1 but thread 1 has got to lock 1 already, so thread 2
+        blocks at this point.
+        In other words, thread 1 will never be able to run and thread 2 will never be able to run.
+        How to avoid deadlocks -
+        1. Always use 1 lock object instead of 2. But this is not a practical solution for many applications that may
+        need multiple locks.
+        2. Ensure that all threads acquire the multiple locks in the same order.
+        In this case, thread 1 had acquired lock 1 first whereas thread 2 had acquired lock 2 first, leading to deadlock.
+         */
+    }
 
     public static void main(String[] args) {
         // basicThreadExamples();
         // multipleThreadsExamples();
         // messageWithDeadlockExamples();
         // producerConsumerExamples();
-        //executerServiceExample();
-        arrayBlockingQueueExamples();
+        // executerServiceExample();
+        // arrayBlockingQueueExamples();
+        deadlockExamples();
     }
 }
