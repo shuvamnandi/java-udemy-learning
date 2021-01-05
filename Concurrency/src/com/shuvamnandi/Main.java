@@ -2,6 +2,7 @@ package com.shuvamnandi;
 
 import com.shuvamnandi.arrayblockingqueue.MyConsumerWithArrayBlockingQueue;
 import com.shuvamnandi.arrayblockingqueue.MyProducerWithArrayBlockingQueue;
+import com.shuvamnandi.deadlocks.PolitePerson;
 import com.shuvamnandi.deadlocks.Thread1;
 import com.shuvamnandi.deadlocks.Thread2;
 import com.shuvamnandi.messages.MyReader;
@@ -11,6 +12,7 @@ import com.shuvamnandi.multiplethreads.Countdown;
 import com.shuvamnandi.multiplethreads.CountdownThread;
 import com.shuvamnandi.producerconsumer.MyConsumer;
 import com.shuvamnandi.producerconsumer.MyProducer;
+import com.shuvamnandi.starvation.Worker;
 import com.shuvamnandi.threads.AnotherThread;
 import com.shuvamnandi.threads.MyRunnable;
 
@@ -167,7 +169,7 @@ public class Main {
         new Thread(myConsumer2).start();
     }
 
-    public static void deadlockExamples() {
+    public static void deadlockExample1() {
         /*
         Deadlocks occur when two or more threads are blocked on locks and every thread that's blocked is
         holding a lock that another block thread wants. For example, thread 1 is holding lock 1 and waiting
@@ -196,7 +198,60 @@ public class Main {
         need multiple locks.
         2. Ensure that all threads acquire the multiple locks in the same order.
         In this case, thread 1 had acquired lock 1 first whereas thread 2 had acquired lock 2 first, leading to deadlock.
+        3. Use a Lock objects instead of Object for lock.
          */
+    }
+
+    public static void deadlockExample2() {
+        PolitePerson jane = new PolitePerson("Jane");
+        PolitePerson mary = new PolitePerson("Mary");
+
+        // Start new thread using lambda
+        new Thread(() -> jane.sayHello(mary)).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mary.sayHello(jane);
+            }
+        }).start();
+        /*
+         Deadlock happens in this case because sayHello() is called for both jane and mary objects.
+         However, given the other person's synchronized method is still not finished running, sayHelloBack() is never called.
+         Thread1 acquires the lock on the jane object and enters the sayHello() method. It prints ot the console, then suspends.
+         Thread2 acquires the lock on the mary object and enters the sayHello() method. It prints ot the console, then suspends.
+         Thread1 runs again and wants to call sayHelloBack() to the mary object, using the mary object we passed to sayHello() while calling it on jane. But Thread2 is holding the mary lock as it has not executed sayHello() fully, so Thread1 suspends.
+         Thread2 runs again and wants to call sayHelloBack() to the jane object, using the jane object we passed to sayHello() while calling it on mary. But Thread1 is holding the jane lock as it has not executed sayHello() fully, so Thread2 suspends.
+         */
+    }
+
+    public static void starvationExample() {
+        /*
+        Starvation occurs as a cause of different threads having different priorities assigned.
+        When we assign a high priority priority to a thread, we are suggesting to the operating system
+        that it should try and run the thread before other waiting threads.
+        It's possible that a thread won't be able to run for a long time because other threads keep blocking on the
+        lock, and when the lock becomes available, the operating system chooses one of those blocked threads to run,
+        especially when one of the other threads has a higher priority than the first thread that was blocked.
+         */
+        Object lock = new Object();
+        Thread t1 = new Thread(new Worker(ANSI_BLUE, lock), "Priority 10");
+        Thread t2 = new Thread(new Worker(ANSI_GREEN, lock), "Priority 8");
+        Thread t3 = new Thread(new Worker(ANSI_YELLOW, lock), "Priority 6");
+        Thread t4 = new Thread(new Worker(ANSI_WHITE, lock), "Priority 4");
+        Thread t5 = new Thread(new Worker(ANSI_RED, lock), "Priority 2");
+
+        t1.setPriority(10);
+        t2.setPriority(8);
+        t3.setPriority(6);
+        t4.setPriority(4);
+        t5.setPriority(2);
+
+        t3.start();
+        t2.start();
+        t1.start();
+        t5.start();
+        t4.start();
+
     }
 
     public static void main(String[] args) {
@@ -206,6 +261,8 @@ public class Main {
         // producerConsumerExamples();
         // executerServiceExample();
         // arrayBlockingQueueExamples();
-        deadlockExamples();
+        // deadlockExample1();
+        // deadlockExample2();
+        starvationExample();
     }
 }
