@@ -232,8 +232,12 @@ public class Main {
         It's possible that a thread won't be able to run for a long time because other threads keep blocking on the
         lock, and when the lock becomes available, the operating system chooses one of those blocked threads to run,
         especially when one of the other threads has a higher priority than the first thread that was blocked.
+
+        The lock is released frequently often and the highest priority thread will probably hog it all the time until
+        it's finished counting and the next thread that runs won't necessarily be the thread with next highest priority.
+        It depends on the Operating System eventually to schedule these, and the priorities may not even be respected.
          */
-        ReentrantLock lock = new ReentrantLock(true);
+        ReentrantLock lock = new ReentrantLock(false);
         Thread t1 = new Thread(new Worker(ANSI_BLUE, lock), "Priority 10");
         Thread t2 = new Thread(new Worker(ANSI_GREEN, lock), "Priority 8");
         Thread t3 = new Thread(new Worker(ANSI_YELLOW, lock), "Priority 6");
