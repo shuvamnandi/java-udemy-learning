@@ -5,6 +5,8 @@ import com.shuvamnandi.arrayblockingqueue.MyProducerWithArrayBlockingQueue;
 import com.shuvamnandi.deadlocks.PolitePerson;
 import com.shuvamnandi.deadlocks.Thread1;
 import com.shuvamnandi.deadlocks.Thread2;
+import com.shuvamnandi.livelocks.PoliteWorker;
+import com.shuvamnandi.livelocks.SharedResource;
 import com.shuvamnandi.messages.MyReader;
 import com.shuvamnandi.messages.Message;
 import com.shuvamnandi.messages.MyWriter;
@@ -258,6 +260,35 @@ public class Main {
 
     }
 
+    public static void liveLockExamples() {
+        /*
+        Live lock a live lock is similar to a deadlock but instead of the threads been blocked, they're actually
+        constantly active and usually waiting for all the other threads to complete their tasks.
+        Now, since all the threads are waiting for others to complete, none of them can actually progress.
+        Let's say that the thread A will loop until thread B complete its task, and thread B will loop until thread A
+        completes its task. Thread A and thread B can get into a state in which they're both looping and waiting for
+        the other to complete. That's actually what's called a live lock.
+        The threads will never progress but they're not actually blocked.
+         */
+        PoliteWorker worker1 = new PoliteWorker("Worker1", true);
+        PoliteWorker worker2 = new PoliteWorker("Worker2", true);
+        SharedResource sharedResource = new SharedResource(worker1);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                worker1.work(sharedResource, worker2);
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                worker2.work(sharedResource, worker1);
+            }
+        }).start();
+    }
+
     public static void main(String[] args) {
         // basicThreadExamples();
         // multipleThreadsExamples();
@@ -267,6 +298,7 @@ public class Main {
         // arrayBlockingQueueExamples();
         // deadlockExample1();
         // deadlockExample2();
-        starvationExample();
+        // starvationExample();
+        liveLockExamples();
     }
 }

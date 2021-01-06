@@ -33,7 +33,7 @@ public class Message {
         }
         empty = false;
         this.message = message;
-        notifyAll(); // Signal the other waiting thread to wake up
+        notifyAll();
     }
 
     /*
