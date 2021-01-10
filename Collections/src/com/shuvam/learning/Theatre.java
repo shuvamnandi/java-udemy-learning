@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Theatre {
 
-    public final String theatreName;
+    private final String theatreName;
 
     public List<Seat> seats = new ArrayList<>();
 
@@ -13,7 +13,7 @@ public class Theatre {
         int lastRow = 'A' + (numRows-1);
         for (char row = 'A'; row <= lastRow; row++) {
             for(int seatNum = 1; seatNum <= seatsPerRow; seatNum++) {
-                Seat seat = new Seat(row+String.format("%02d", seatNum));
+                Seat seat = new Seat(row + String.format("%02d", seatNum));
                 seats.add(seat);
             }
         }
@@ -32,10 +32,10 @@ public class Theatre {
 
     public boolean reserveSeat(String seatNumber) {
         Seat requestedSeat = new Seat(seatNumber);
-        int foundSeat = Collections.binarySearch(seats, requestedSeat, null);
+        int foundSeat = Collections.binarySearch(seats, requestedSeat);
         if (foundSeat >= 0) {
             return seats.get(foundSeat).reserve();
-        } else{
+        } else {
             System.out.println("There is no seat " + seatNumber);
             return false;
         }
