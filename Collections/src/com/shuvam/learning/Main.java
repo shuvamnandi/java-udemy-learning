@@ -92,8 +92,23 @@ public class Main {
             }
             System.out.println();
 
-            String direction = scanner.nextLine().toUpperCase();
+            Map<String, String> vocabulary = new HashMap<>();
+            vocabulary.put("QUIT", "Q");
+            vocabulary.put("NORTH", "N");
+            vocabulary.put("SOUTH", "S");
+            vocabulary.put("EAST", "E");
+            vocabulary.put("WEST", "W");
 
+            String direction = scanner.nextLine().toUpperCase();
+            if (direction.length() > 1) {
+                String[] words = direction.split(" ");
+                for(String word: words) {
+                    if(vocabulary.containsKey(word)) {
+                        direction = vocabulary.get(word);
+                        break;
+                    }
+                }
+            }
             if(exits.containsKey(direction)) {
                 loc = exits.get(direction);
             }
