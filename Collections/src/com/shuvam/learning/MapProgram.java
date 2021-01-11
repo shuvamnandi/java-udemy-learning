@@ -29,7 +29,10 @@ public class MapProgram {
         }
         System.out.println(languages.get("Java"));
 
-        // languages.remove("Lisp"); // Removing entry with key "Lisp"
+        // Remove a key-value pair
+        languages.remove("Lisp", "A functional programming language with imperative features");
+        // Remove a key-value pair based on key only
+        languages.remove("Lisp");
         if (languages.remove("Algol", "a family of algorithmic languages")) {
             System.out.println("Algol key was removed");
         } else {
@@ -41,7 +44,7 @@ public class MapProgram {
             System.out.println(key + ": " + languages.get(key));
         }
         System.out.println("==============================");
-        // Replace an existing key with a new value
+        // Replace an existing key with a new value, based on key only
         languages.replace("Lisp", "Therein lies madness", "A functional programming language with imperative features");
         // Replace an existing key-value pair, if it exists
         languages.replace("Lisp", "A functional programming language with imperative features");
