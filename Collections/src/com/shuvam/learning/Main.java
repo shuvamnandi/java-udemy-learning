@@ -81,7 +81,7 @@ public class Main {
         tempExit = new HashMap<>();
         tempExit.put("S", 1);
         tempExit.put("W", 2);
-        locations.put(5, new Location(5, "You are in the forest", tempExit));
+        locations.put(5, new Location(5, "You are in the forest", null));
 //        tempExit.put("Q", 0);
 
         int loc = 1;
