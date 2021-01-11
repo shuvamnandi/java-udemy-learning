@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Main {
     private static Map<Integer, Location> locations = new HashMap<>();
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void mapExamples() {
         Theatre theatre = new Theatre("Big", 8, 12 );
@@ -49,8 +50,6 @@ public class Main {
     }
 
     public static void adventureGame() {
-        Scanner scanner = new Scanner(System.in);
-
         locations.put(0, new Location(0, "You are sitting in front of a computer learning Java"));
         locations.put(1, new Location(1, "You are standing at the end of a road before a small brick building"));
         locations.put(2, new Location(2, "You are at the top of a hill"));
@@ -86,7 +85,7 @@ public class Main {
                 break;
             }
             Map<String, Integer> exits = locations.get(loc).getExits();
-            System.out.println("Available exits are: ");
+            System.out.print("Available exits are ");
             for(String exit: exits.keySet()) {
                 System.out.print(exit + ", ");
             }
