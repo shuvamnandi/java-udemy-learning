@@ -29,10 +29,28 @@ public class MapProgram {
         }
         System.out.println(languages.get("Java"));
 
+        // languages.remove("Lisp"); // Removing entry with key "Lisp"
+        if (languages.remove("Algol", "a family of algorithmic languages")) {
+            System.out.println("Algol key was removed");
+        } else {
+            System.out.println("Algol not removed, key/value pair not found");
+        }
         // Print keys of the HashMap, returns as a Set when keySet() is called
         System.out.println("==============================");
         for(String key: languages.keySet()) {
             System.out.println(key + ": " + languages.get(key));
         }
+        System.out.println("==============================");
+        // Replace an existing key with a new value
+        languages.replace("Lisp", "Therein lies madness", "A functional programming language with imperative features");
+        // Replace an existing key-value pair, if it exists
+        languages.replace("Lisp", "A functional programming language with imperative features");
+        // Replace a non-existent key, does not work
+        languages.replace("Scala", "This will not be replaced");
+        System.out.println("==============================");
+        for(String key: languages.keySet()) {
+            System.out.println(key + ": " + languages.get(key));
+        }
+        System.out.println("==============================");
     }
 }
