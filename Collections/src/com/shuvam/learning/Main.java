@@ -191,7 +191,7 @@ public class Main {
         planets.add(tempPlanet);
 
         tempPlanet = new HeavenlyBody("Pluto", 90560);
-        solarSystem.put(tempPlanet.getName(), tempPlanet);
+        System.out.println(solarSystem.put(tempPlanet.getName(), tempPlanet));
         planets.add(tempPlanet);
 
         System.out.println("Planets");
@@ -214,6 +214,16 @@ public class Main {
         System.out.println("All moons in solar system");
         for (HeavenlyBody moon: moons) {
             System.out.println("\t" + moon.getName() + " with an orbital period of " + moon.getOrbitalPeriod() + " days.");
+        }
+
+        // Add in another Pluto
+        tempPlanet = new HeavenlyBody("Pluto", 905);
+        System.out.println(solarSystem.put(tempPlanet.getName(), tempPlanet));
+        planets.add(tempPlanet);
+
+        System.out.println("Planets");
+        for (HeavenlyBody p:planets) {
+            System.out.println("\t" + p.getName());
         }
     }
 
