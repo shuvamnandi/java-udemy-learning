@@ -6,6 +6,9 @@ public class Main {
     private static Map<Integer, Location> locations = new HashMap<>();
     private static Scanner scanner = new Scanner(System.in);
 
+    private static Map<String, HeavenlyBody> solarSystem = new HashMap<>();
+    private static Set<HeavenlyBody> planets = new HashSet<>();
+
     public static void mapExamples() {
         Theatre theatre = new Theatre("Big", 8, 12 );
         System.out.println(theatre.getTheatreName());
@@ -81,6 +84,7 @@ public class Main {
         tempExit = new HashMap<>();
         tempExit.put("S", 1);
         tempExit.put("W", 2);
+        tempExit.equals(tempExit);
         locations.put(5, new Location(5, "You are in the forest", null));
 //        tempExit.put("Q", 0);
 
@@ -125,10 +129,99 @@ public class Main {
         }
     }
 
+    public static void setExamples() {
+        HeavenlyBody tempPlanet = new HeavenlyBody("Mercury", 88);
+        solarSystem.put(tempPlanet.getName(), tempPlanet);
+        planets.add(tempPlanet);
+
+        tempPlanet = new HeavenlyBody("Venus", 225);
+        solarSystem.put(tempPlanet.getName(), tempPlanet);
+        planets.add(tempPlanet);
+
+        tempPlanet = new HeavenlyBody("Earth", 365);
+        solarSystem.put(tempPlanet.getName(), tempPlanet);
+        planets.add(tempPlanet);
+
+        HeavenlyBody tempMoon = new HeavenlyBody("Moon", 27);
+        solarSystem.put(tempMoon.getName(), tempMoon);
+        tempPlanet.addMoon(tempMoon);
+
+        tempPlanet = new HeavenlyBody("Mars", 687);
+        solarSystem.put(tempPlanet.getName(), tempPlanet);
+        planets.add(tempPlanet);
+
+        tempMoon = new HeavenlyBody("Deimos", 1.3);
+        solarSystem.put(tempMoon.getName(), tempMoon);
+        tempPlanet.addMoon(tempMoon);
+
+        tempMoon = new HeavenlyBody("Phobos", 0.3);
+        solarSystem.put(tempMoon.getName(), tempMoon);
+        tempPlanet.addMoon(tempMoon);
+
+        tempPlanet = new HeavenlyBody("Jupiter", 4331);
+        solarSystem.put(tempPlanet.getName(), tempPlanet);
+        planets.add(tempPlanet);
+
+        tempMoon = new HeavenlyBody("Io", 1.8);
+        solarSystem.put(tempMoon.getName(), tempMoon);
+        tempPlanet.addMoon(tempMoon);
+
+        tempMoon = new HeavenlyBody("Europa", 3.5);
+        solarSystem.put(tempMoon.getName(), tempMoon);
+        tempPlanet.addMoon(tempMoon);
+
+        tempMoon = new HeavenlyBody("Ganymede", 7.1);
+        solarSystem.put(tempMoon.getName(), tempMoon);
+        tempPlanet.addMoon(tempMoon);
+
+        tempMoon = new HeavenlyBody("Callisto", 16.7);
+        solarSystem.put(tempMoon.getName(), tempMoon);
+        tempPlanet.addMoon(tempMoon);
+
+        tempPlanet = new HeavenlyBody("Saturn", 10747);
+        solarSystem.put(tempPlanet.getName(), tempPlanet);
+        planets.add(tempPlanet);
+
+        tempPlanet = new HeavenlyBody("Uranus", 30589);
+        solarSystem.put(tempPlanet.getName(), tempPlanet);
+        planets.add(tempPlanet);
+
+        tempPlanet = new HeavenlyBody("Neptune", 59800);
+        solarSystem.put(tempPlanet.getName(), tempPlanet);
+        planets.add(tempPlanet);
+
+        tempPlanet = new HeavenlyBody("Pluto", 90560);
+        solarSystem.put(tempPlanet.getName(), tempPlanet);
+        planets.add(tempPlanet);
+
+        System.out.println("Planets");
+        for (HeavenlyBody planet:planets) {
+            System.out.println("\t" + planet.getName());
+        }
+
+        HeavenlyBody planet = solarSystem.get("Jupiter");
+        System.out.println("Moons of planet: " + planet.getName());
+        for (HeavenlyBody moon:planet.getSatellites()) {
+            System.out.println("\t" + moon.getName());
+        }
+
+        // Union of set of planets of all moons
+        Set<HeavenlyBody> moons = new HashSet<>();
+        for(HeavenlyBody body: planets) {
+            moons.addAll((body.getSatellites()));
+        }
+
+        System.out.println("All moons in solar system");
+        for (HeavenlyBody moon: moons) {
+            System.out.println("\t" + moon.getName() + " with an orbital period of " + moon.getOrbitalPeriod() + " days.");
+        }
+    }
+
     public static void main(String[] args){
         // Write code here
         // mapExamples();
-        adventureGame();
+        // adventureGame();
+        setExamples();
     }
 
 
