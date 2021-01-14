@@ -225,6 +225,37 @@ public class Main {
         for (HeavenlyBody p:planets) {
             System.out.println("\t" + p.getName());
         }
+
+        Object o = new Object();
+        System.out.println(o.equals(o)); // results true
+        System.out.println("pluto".equals("")); // results false
+
+        /*
+        The reason that the two Pluto objects don't compare equal is because the base Object class from which all other
+        classes are derived just defines a very simple equals method, that performs what is known as referential
+        equality, i.e. if both references point to the same object then they are equal, otherwise they are not.
+        This is the default equals that comes with the base object class.
+
+        Pluto is getting added twice in the planets HashSet as of now. The reason is that the two java objects for each
+        Pluto do not compare equal, so the set is happy to accept both of them for that reason. If we use them as keys
+        in a map, the same thing will happen as well, and we will have two entries in a map. This is why the equals method has to be overwritten in our HeavenlyBody.
+
+        If two objects compare equal, then they must have the same hash code --> The hash code determines which
+        bucket any object is added into. There is a requirement that any objects that are equal,
+        should always had the same hash code and so that they will end up in the same bucket.
+
+        If two objects compare equal, then their hash code must also be the same. That's why one must override
+        the hashCode method if you ever override equals in a class. This is to ensure that the two equal objects
+        will always generate the same hashCode for bucketing for HashMap storage.
+
+        When we add an object to a HashMap, its hashCode tells the collection which bucket it should go into.
+        There may already be objects in that bucket, so each object is compared to the new object to make sure that
+        its not already in there. Now because the comparison is performed using the equals method the collection will
+        only know if it's already there if it's looking in the right bucket, therefore the hash code must be the same.
+        Now it is of no use for equals returning true if the collection is checking the wrong bucket, i.e. if the
+        hashCode for the new object is not the same as an object that is that it is equal to.
+        Hence for 2 objects equal to each other, their hashCode must also return be the same.
+         */
     }
 
     public static void main(String[] args){
