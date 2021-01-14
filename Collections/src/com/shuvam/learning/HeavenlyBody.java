@@ -45,4 +45,12 @@ public class HeavenlyBody {
         return this.name.equals(objName);
     }
 
+    // Above does not yet get called, duplicate planets are still added to our HashSet
+    // We need to override the hashCode() too
+    // With below override, now duplicate planets (based on name) will not be added
+
+    @Override
+    public int hashCode() {
+        return this.getName().hashCode() + 76;
+    }
 }
