@@ -3,7 +3,7 @@ package com.shuvam.learning;
 import java.util.HashSet;
 import java.util.Set;
 
-public class HeavenlyBody {
+public final class HeavenlyBody {
     private final String name;
     private final double orbitalPeriod;
     private final Set<HeavenlyBody> satellites;
@@ -26,7 +26,8 @@ public class HeavenlyBody {
         return new HashSet<>(satellites);
     }
 
-    // This method the class makes mutable. This however makes sense, as new bodies are discovered in the solar system constantly.
+    // This method the class makes mutable.
+    // This however makes sense, as new bodies are discovered in the solar system constantly.
     public boolean addMoon(HeavenlyBody moon) {
         return this.satellites.add(moon);
     }
@@ -38,7 +39,7 @@ public class HeavenlyBody {
         }
         System.out.println("obj.getClass() is " + obj.getClass());
         System.out.println("this.getClass() is " + this.getClass());
-        if((obj==null) || (obj.getClass() != this.getClass())) {
+        if((obj==null) || (obj.getClass() != this.getClass())) { // Don't return true if obj is a subclass of this class
             return false;
         }
         String objName = ((HeavenlyBody) obj).getName();
@@ -51,6 +52,6 @@ public class HeavenlyBody {
 
     @Override
     public int hashCode() {
-        return this.getName().hashCode() + 76;
+        return this.getName().hashCode() + 76;  // Adding a random number, to make a HeavenlyBody named Pluto should have a different hash code than a String Pluto
     }
 }
