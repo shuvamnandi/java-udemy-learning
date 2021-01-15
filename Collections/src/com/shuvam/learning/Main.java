@@ -258,10 +258,19 @@ public class Main {
          */
     }
 
+    public static void equalsSubclassingProblems() {
+        Labrador rover = new Labrador("Rover");
+        Dog rover2 = new Dog("Rover");
+
+        System.out.println(rover2.equals(rover)); // true as Labrador is an instance of Dog
+        System.out.println(rover.equals(rover2)); // false as Dog is not an instance of Labrador
+
+    }
     public static void main(String[] args){
         // mapExamples();
         // adventureGame();
-        setExamples();
+        // setExamples();
+        equalsSubclassingProblems();
     }
 
 
