@@ -33,10 +33,10 @@ public class ShoppingBasket {
 
     @Override
     public String toString() {
-        String s = "\nShopping basket " + name + " contains " + basket.size() + " items\n";
+        String s = "\nShopping basket " + name + " contains " + basket.size() + " types of items\n";
         double totalCost = 0.0;
         for(Map.Entry<StockItem, Integer> item : basket.entrySet()) {
-            s += item.getKey() + ". " + item.getValue() + " purchased\n";
+            s += item.getKey() + ", " + item.getValue() + " added\n";
             totalCost += item.getKey().getPrice() * item.getValue();
         }
         return s + " Total stock value " + String.format("%.2f", totalCost);
