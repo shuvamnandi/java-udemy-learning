@@ -1,13 +1,14 @@
 package com.shuvam.learning;
 
+import com.sun.xml.internal.ws.wsdl.writer.document.soap.Body;
+
 import java.util.HashSet;
 import java.util.Set;
 
-public class HeavenlyBody {
-    private final String name;
+public abstract class HeavenlyBody {
+    private final Key key;
     private final double orbitalPeriod;
     private final Set<HeavenlyBody> satellites;
-    private final BodyTypes bodyType;
 
     protected enum BodyTypes{
         STAR,
@@ -19,14 +20,13 @@ public class HeavenlyBody {
     }
 
     public HeavenlyBody(String name, double orbitalPeriod, BodyTypes bodyType) {
-        this.name = name;
+        this.key = new Key(name, bodyType);
         this.orbitalPeriod = orbitalPeriod;
         this.satellites = new HashSet<>();
-        this.bodyType = bodyType;
     }
 
-    public String getName() {
-        return name;
+    public Key getKey() {
+        return key;
     }
 
     public double getOrbitalPeriod() {
@@ -35,10 +35,6 @@ public class HeavenlyBody {
 
     public Set<HeavenlyBody> getSatellites() {
         return new HashSet<>(satellites);
-    }
-
-    public BodyTypes getBodyType() {
-        return bodyType;
     }
 
     // This method the class makes mutable.
@@ -55,9 +51,7 @@ public class HeavenlyBody {
         }
         if (obj instanceof HeavenlyBody) {
             HeavenlyBody theObject = (HeavenlyBody) obj;
-            if (this.name.equals(theObject)) {
-                return this.bodyType == theObject.getBodyType();
-            }
+            return this.key.equals(theObject.getKey());
         }
         return false;
     }
@@ -68,11 +62,52 @@ public class HeavenlyBody {
 
     @Override
     public int hashCode() {
-        return this.getName().hashCode() + 76 + this.getBodyType().hashCode();  // Adding a random number, to make a HeavenlyBody named Pluto should have a different hash code than a String Pluto
+        return this.getKey().hashCode();  // Adding a random number, to make a HeavenlyBody named Pluto should have a different hash code than a String Pluto
+    }
+
+    public static Key makeKey(String name, BodyTypes bodyType) {
+        return new Key(name, bodyType);
     }
 
     @Override
     public String toString() {
-        return this.name + ": " + this.bodyType + ", " + this.orbitalPeriod;
+        return this.key.getName() + ": " + this.key.getBodyType() + ", " + this.orbitalPeriod;
+    }
+
+    public static final class Key {
+        private String name;
+        private BodyTypes bodyType;
+
+        public Key(String name, BodyTypes bodyType) {
+            this.name = name;
+            this.bodyType = bodyType;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public BodyTypes getBodyType() {
+            return bodyType;
+        }
+
+        @Override
+        public int hashCode() {
+            return this.name.hashCode() + 76 + this.bodyType.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            Key key = (Key) obj;
+            if (this.name.equals(key.getName())) {
+                return this.bodyType == key.getBodyType();
+            }
+            return false;
+        }
+
+        @Override
+        public String toString() {
+            return this.getName() + ": " + this.getBodyType();
+        }
     }
 }
