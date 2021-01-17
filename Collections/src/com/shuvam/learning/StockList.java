@@ -1,5 +1,7 @@
 package com.shuvam.learning;
 
+import sun.awt.image.ImageWatched;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,6 +39,14 @@ public class StockList {
 
     public StockItem get(String key) {
         return list.get(key);
+    }
+
+    public Map<String, Double> PriceList() {
+        Map<String, Double> prices = new LinkedHashMap<>();
+        for (Map.Entry<String, StockItem> item: list.entrySet()) {
+            prices.put(item.getKey(), item.getValue().getPrice());
+        }
+        return Collections.unmodifiableMap(prices);
     }
 
     public Map<String, StockItem> Items() {

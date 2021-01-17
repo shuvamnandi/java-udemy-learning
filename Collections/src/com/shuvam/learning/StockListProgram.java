@@ -1,5 +1,7 @@
 package com.shuvam.learning;
 
+import java.util.Map;
+
 public class StockListProgram {
     /*
     There are variants of the HashMap and HashSet classes, called LinkedHashMap and LinkedHashSet. The real difference
@@ -71,7 +73,17 @@ public class StockListProgram {
         System.out.println(basket);
 
         System.out.println(stockList);
+        // stockList.Items().put(temp.getName(), temp); // throws an UnsupportedOperationException
 
+        // Individual objects inside the map can still be accessed and modified, with two different ways of accessing the Car item
+        stockList.Items().get("Car").adjustStock(2000);
+        stockList.get("Car").adjustStock(-1000);
+        System.out.println(stockList);
+
+        // Both String and Double are immutable
+        for(Map.Entry<String, Double> priceEntry: stockList.PriceList().entrySet()) {
+            System.out.println(priceEntry.getKey() + " costs " + priceEntry.getValue());
+        }
     }
 
     public static int sellItem(ShoppingBasket basket, String item, int quantity) {
