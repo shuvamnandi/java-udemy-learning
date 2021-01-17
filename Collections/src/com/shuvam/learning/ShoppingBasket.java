@@ -3,6 +3,7 @@ package com.shuvam.learning;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ShoppingBasket {
     private final String name;
@@ -10,7 +11,8 @@ public class ShoppingBasket {
 
     public ShoppingBasket(String name) {
         this.name = name;
-        this.basket = new HashMap<>();
+        // Makes the items sorted in alphabetical order, using compareTo method on the key object of this map
+        this.basket = new TreeMap<>();
     }
 
     public int addToBasket(StockItem item, int quantity) {
@@ -39,6 +41,6 @@ public class ShoppingBasket {
             s += item.getKey() + ", " + item.getValue() + " added\n";
             totalCost += item.getKey().getPrice() * item.getValue();
         }
-        return s + " Total stock value " + String.format("%.2f", totalCost);
+        return s + "Total stock value " + String.format("%.2f", totalCost);
     }
 }
