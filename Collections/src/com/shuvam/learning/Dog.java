@@ -11,8 +11,9 @@ public class Dog {
         return this.name;
     }
 
+    // Adding final flag to equals prevents subclasses to override equals method
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (this == obj){
             return true;
         }
