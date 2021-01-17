@@ -234,7 +234,7 @@ public class Main {
 
         System.out.println("\nThe solar system contains");
         for (HeavenlyBody heavenlyBody: solarSystem.values()) {
-            System.out.println(heavenlyBody);
+            System.out.println("\t" + heavenlyBody);
         }
 
         HeavenlyBody earth1 = new Planet("Earth", 365);
