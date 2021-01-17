@@ -130,67 +130,67 @@ public class Main {
     }
 
     public static void setExamples() {
-        HeavenlyBody tempPlanet = new HeavenlyBody("Mercury", 88);
+        HeavenlyBody tempPlanet = new Planet("Mercury", 88);
         solarSystem.put(tempPlanet.getName(), tempPlanet);
         planets.add(tempPlanet);
 
-        tempPlanet = new HeavenlyBody("Venus", 225);
+        tempPlanet = new Planet("Venus", 225);
         solarSystem.put(tempPlanet.getName(), tempPlanet);
         planets.add(tempPlanet);
 
-        tempPlanet = new HeavenlyBody("Earth", 365);
+        tempPlanet = new Planet("Earth", 365);
         solarSystem.put(tempPlanet.getName(), tempPlanet);
         planets.add(tempPlanet);
 
-        HeavenlyBody tempMoon = new HeavenlyBody("Moon", 27);
+        HeavenlyBody tempMoon = new Planet("Moon", 27);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        tempPlanet.addMoon(tempMoon);
+        tempPlanet.addSatellite(tempMoon);
 
-        tempPlanet = new HeavenlyBody("Mars", 687);
+        tempPlanet = new Planet("Mars", 687);
         solarSystem.put(tempPlanet.getName(), tempPlanet);
         planets.add(tempPlanet);
 
-        tempMoon = new HeavenlyBody("Deimos", 1.3);
+        tempMoon = new Moon("Deimos", 1.3);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        tempPlanet.addMoon(tempMoon);
+        tempPlanet.addSatellite(tempMoon);
 
-        tempMoon = new HeavenlyBody("Phobos", 0.3);
+        tempMoon = new Moon("Phobos", 0.3);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        tempPlanet.addMoon(tempMoon);
+        tempPlanet.addSatellite(tempMoon);
 
-        tempPlanet = new HeavenlyBody("Jupiter", 4331);
+        tempPlanet = new Planet("Jupiter", 4331);
         solarSystem.put(tempPlanet.getName(), tempPlanet);
         planets.add(tempPlanet);
 
-        tempMoon = new HeavenlyBody("Io", 1.8);
+        tempMoon = new Moon("Io", 1.8);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        tempPlanet.addMoon(tempMoon);
+        tempPlanet.addSatellite(tempMoon);
 
-        tempMoon = new HeavenlyBody("Europa", 3.5);
+        tempMoon = new Moon("Europa", 3.5);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        tempPlanet.addMoon(tempMoon);
+        tempPlanet.addSatellite(tempMoon);
 
-        tempMoon = new HeavenlyBody("Ganymede", 7.1);
+        tempMoon = new Moon("Ganymede", 7.1);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        tempPlanet.addMoon(tempMoon);
+        tempPlanet.addSatellite(tempMoon);
 
-        tempMoon = new HeavenlyBody("Callisto", 16.7);
+        tempMoon = new Moon("Callisto", 16.7);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        tempPlanet.addMoon(tempMoon);
+        tempPlanet.addSatellite(tempMoon);
 
-        tempPlanet = new HeavenlyBody("Saturn", 10747);
+        tempPlanet = new Planet("Saturn", 10747);
         solarSystem.put(tempPlanet.getName(), tempPlanet);
         planets.add(tempPlanet);
 
-        tempPlanet = new HeavenlyBody("Uranus", 30589);
+        tempPlanet = new Planet("Uranus", 30589);
         solarSystem.put(tempPlanet.getName(), tempPlanet);
         planets.add(tempPlanet);
 
-        tempPlanet = new HeavenlyBody("Neptune", 59800);
+        tempPlanet = new Planet("Neptune", 59800);
         solarSystem.put(tempPlanet.getName(), tempPlanet);
         planets.add(tempPlanet);
 
-        tempPlanet = new HeavenlyBody("Pluto", 90560);
+        tempPlanet = new Planet("Pluto", 90560);
         System.out.println(solarSystem.put(tempPlanet.getName(), tempPlanet));
         planets.add(tempPlanet);
 
@@ -217,7 +217,7 @@ public class Main {
         }
 
         // Add in another Pluto
-        tempPlanet = new HeavenlyBody("Pluto", 905);
+        tempPlanet = new DwarfPlanet("Pluto", 905);
         System.out.println(solarSystem.put(tempPlanet.getName(), tempPlanet));
         planets.add(tempPlanet);
 
