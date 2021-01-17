@@ -23,6 +23,8 @@ public class StockListProgram {
 
         temp = new StockItem("Cup", 0.51 , 120);
         stockList.addStock(temp);
+        temp = new StockItem("Cup", 0.45 , 10);
+        stockList.addStock(temp);
 
         temp = new StockItem("Juice", 3.1 , 20);
         stockList.addStock(temp);
@@ -36,7 +38,12 @@ public class StockListProgram {
         temp = new StockItem("Vase", 7.2 , 15);
         stockList.addStock(temp);
 
+        // Order of insertion is retained when we print out the map items
+        // or keys of the LinkedHashMap
         System.out.println(stockList);
+        for (String key: stockList.Items().keySet()){
+            System.out.println(key);
+        }
     }
 
 }

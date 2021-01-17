@@ -33,10 +33,10 @@ public class StockItem implements Comparable<StockItem> {
         return quantityStock;
     }
 
-    public void adjustStock(int qualityStock) {
+    public void adjustStock(int quantityStock) {
         int newQuantity = this.quantityStock + quantityStock;
         if (newQuantity >= 0) {
-            this.quantityStock = qualityStock;
+            this.quantityStock = newQuantity;
         }
     }
 
