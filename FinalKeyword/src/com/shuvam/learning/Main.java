@@ -25,5 +25,7 @@ public class Main {
         password.letMeIn(63423214);
         password.letMeIn(634231214);
 
+        SIBTest sibTest = new SIBTest();
+        sibTest.someMethod();
     }
 }
