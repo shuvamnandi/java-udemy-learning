@@ -17,7 +17,7 @@ public class Main {
         // Math classes is marked as final, which prevents the class from being sub-classed
         // Any method marked as final prevents the method from being overridden
 
-        Password password = new Password(634231214);
+        Password password = new ExtendedPassword(634231214);
         password.storePassword();
         password.letMeIn(1);
         password.letMeIn(5213231);
