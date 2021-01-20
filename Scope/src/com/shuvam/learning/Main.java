@@ -12,7 +12,8 @@ public class Main {
 
         ScopeCheck.InnerClass innerClass = scopeCheck.new InnerClass();
         innerClass.timesTwo();
-        System.out.println("varThree is: " + innerClass.varThree);
+        scopeCheck.useInner();
+        // System.out.println("innerClass.varThree" + innerClass.varThree); // This does not work as varThree is private
 
     }
 }

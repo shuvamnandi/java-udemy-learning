@@ -22,9 +22,19 @@ public class ScopeCheck {
         // System.out.println("Value of i is" + i); // This does not work, i is not available in this scope
     }
 
+    // The containing class can also access all the methods and variables of a contained class, even if they're
+    // marked as private. The same is true the other way around.
+    public void useInner() {
+        InnerClass innerClass = new InnerClass();
+        System.out.println("Using innerClass.varThree: "+ innerClass.varThree);
+    }
+
     public class InnerClass {
         // The object scope is the block in which it is declared, including any contained blocks.
-        public int varThree = 3; // if this is commented out, it uses privateVar from ScopeCheck, which has a value of 1
+        private int varThree = 3; // if this is commented out, it uses privateVar from ScopeCheck, which has a value of 1
+        // The containing class can also access all the methods and variables of a contained class, even if they're
+        // marked as private. The same is true the other way around.
+        // However, it is not accessible anywhere outside of here.
 
         public InnerClass() {
             System.out.println("InnerClass created, varOne is " + varOne + ", varThree is " + varThree);
