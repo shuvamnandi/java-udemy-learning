@@ -1,7 +1,7 @@
 package com.shuvamnandi.learning;
 
 public class Main {
-    public int multiplier = 7;
+    public static int multiplier = 7;
 
     public static void main(String[] args) {
         System.out.println("Number of instances: " + StaticTest.getNumInstances());
@@ -20,12 +20,12 @@ public class Main {
         So as a result, Java can't allow a static method to access non-static fields or methods, because
         they don't exist when the static methods get called.
          */
-//        int answer = multiply(6);
-//        System.out.println("The answer is: " + answer);
-//        System.out.println("Multiplier is: " + multiplier);
+        int answer = multiply(6);
+        System.out.println("The answer is: " + answer);
+        System.out.println("Multiplier is: " + multiplier);
     }
 
-    public int multiply(int number) {
+    public static int multiply(int number) {
         return number * multiplier;
     }
 }
