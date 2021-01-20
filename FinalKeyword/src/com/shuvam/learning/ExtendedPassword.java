@@ -9,8 +9,8 @@ public class ExtendedPassword extends Password{
     }
 
     // Doing this compromises the security of this password storage
-//    @Override
-//    public void storePassword() {
-//        System.out.println("Saving password as: " + this.decryptedPassword);
-//    }
+    // @Override
+    // public void storePassword() {
+    //     System.out.println("Saving password as: " + this.decryptedPassword);
+    // }
 }
