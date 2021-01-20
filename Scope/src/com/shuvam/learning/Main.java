@@ -9,5 +9,6 @@ public class Main {
         System.out.println("ScopeCheck.privateVar is: " + scopeCheck.getPrivateVar());
         // System.out.println("ScopeCheck.privateVar is: " + scopeCheck.privateVar); // this does not work
         System.out.println("privateVar is: " + privateVar);
+        scopeCheck.timesTwo();
     }
 }

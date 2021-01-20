@@ -13,10 +13,11 @@ public class ScopeCheck {
     }
 
     public void timesTwo() {
-        int privateVar = 2;
+        int privateVar = 2; // if this is committed, privateVar from Class is used
         for (int i = 0; i < 10; i++) {
             System.out.println(i + " times 2 is " + i * privateVar);
         }
+        // System.out.println("Value of i is" + i); // This does not work, i is not available in this scope
     }
 
 }
