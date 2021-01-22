@@ -3,13 +3,18 @@ package com.shuvam.learning;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
-import java.util.function.IntPredicate;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public class Main {
 
+    /*
+    The interfaces in the java.util.function package don't have any meaning as themselves. They describe the
+    arguments and return value, but do not dictate actually what the implementations must do.
+    They're not like interfaces such as Runnable which represents an object with a block of executable code,
+    or an event handler which contains code that will run when the user interacts with the user interface component.
+    As an example, when we want to use a lambda expression that tests a value and returns true false we, can use a Predicate.
+    When we want to use a lambda expression in place for method that accepts an argument and returns a value we can use Function.
+     */
     public static void main(String[] args) {
         Employee john = new Employee("John Doe", 30);
         Employee tim = new Employee("Tim Buchalka", 21);
@@ -23,6 +28,8 @@ public class Main {
         employeeList.add(tim);
         employeeList.add(snow);
         employeeList.add(jack);
+        employeeList.add(red);
+        employeeList.add(charming);
 
         // Predicate interface requires its test method to be implemented, done via lambda below
         printEmployeesByAge(employeeList, "Employees over age 30", employee -> employee.getAge() > 30);
@@ -85,6 +92,33 @@ public class Main {
             }
         }
 
+        System.out.println("====================");
+
+        // Chaining multiple functions and making a new function
+        Function<Employee, String> upperCase = employee -> employee.getName().toUpperCase();
+        Function<String, String> firstName = name -> name.substring(0, name.indexOf(" "));
+        Function chainedFunction = upperCase.andThen(firstName);
+        System.out.println(chainedFunction.apply(employeeList.get(1))); // prints TIM
+
+        // BiFunction interface is an interface that accept two arguments
+        BiFunction<String, Employee, String> concatAge = (String name, Employee employee) -> {
+            return name.concat(" " + employee.getAge());
+        };
+
+        String upperName = upperCase.apply(employeeList.get(1));
+        System.out.println(concatAge.apply(upperName, employeeList.get(1)));
+
+        // Unary operator interface accepts a single argument and returns a value of the same type as the argument
+        UnaryOperator<Integer> iPlus5 = i -> i+5;
+        System.out.println(iPlus5.apply(10)); // 15
+
+        BiPredicate<Employee, Integer> employeeAgeCheck = new BiPredicate<Employee, Integer>() {
+            @Override
+            public boolean test(Employee employee, Integer age) {
+                return employee.getAge() > age;
+            }
+        };
+        System.out.println("Employee is older than 20: " + employeeAgeCheck.test(employeeList.get(1), 20));
     }
 
     public static String getAName(Function<Employee, String> function, Employee employee) {
