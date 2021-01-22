@@ -1,10 +1,8 @@
 package com.shuvam.learning;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.*;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -121,16 +119,17 @@ public class Main {
         };
         System.out.println("Employee is older than 20: " + employeeAgeCheck.test(employeeList.get(1), 20));
 
+        System.out.println("-------Stream Example--------");
         List<String> someBingoNumbers = Arrays.asList(
                     "N40", "N36", "B12", "A30", "B6", "G53",
-                "G49", "G70", "G56", "I27", "X28", "O71"
+                    "G49", "G70", "G56", "I27", "X28", "O71"
         );
 
         List<String> gNumbers = new ArrayList<>();
 
         someBingoNumbers.forEach(number -> {
             if(number.toUpperCase().startsWith("G")) {
-                System.out.println(number);
+                gNumbers.add(number);
             }
         });
 
@@ -146,14 +145,30 @@ public class Main {
         Any stream operations that we use have to meet two requirements:
         1. They must be non-interfering, which means that they don't change the stream source in any way.
         2. They must be stateless, so the result of an operation can't depend on any state outside of the operation.
+        The map method ultimately returns a stream which contains all the uppercase bingo numbers, i.e. the results of
+        calling the toUpperCase method on the input stream. It's called map because it is essentially mapping each item
+        in the input stream to the results returned by the function argument. Now the resulting stream will have the
+        same number of items as the source stream. In this case, the source stream is the result of the some bingo number.
          */
         System.out.println("-------Using Streams--------");
+        // Collection someBingoNumbers is the source of the stream
         someBingoNumbers
                 .stream()
                 .map(String::toUpperCase) // Method reference, passed as a Function, same as s.toUpperCase()
                 .filter(s->s.startsWith("G"))
                 .sorted()
-                .forEach(s-> System.out.println(s));
+                .forEach(s-> System.out.println(s)); // Nothing to return here, hence it is a terminal operation
+
+        // Create a Stream from scratch
+        Stream<String> iNumberStream = Stream.of("I26", "I17", "I29", "D71");
+        Stream<String> nNumberStream = Stream.of("N12", "N81", "N89", "N41", "I29");
+        Stream concatStream = Stream.concat(iNumberStream, nNumberStream);
+        System.out.println("------------------------------------------");
+        System.out.println("Concatenated stream # of distinct items: " +
+                concatStream
+                    .distinct()
+                    .peek(s-> System.out.println(s)) // peek for debugging purposes, which accepts a Consumer interface with action method implemented
+                    .count());
     }
 
     public static String getAName(Function<Employee, String> function, Employee employee) {
