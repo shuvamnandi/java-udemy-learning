@@ -1,6 +1,7 @@
 package com.shuvam.learning;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.function.*;
@@ -119,6 +120,22 @@ public class Main {
             }
         };
         System.out.println("Employee is older than 20: " + employeeAgeCheck.test(employeeList.get(1), 20));
+
+        List<String> someBingoNumbers = Arrays.asList(
+                    "N40", "N36", "B12", "A30", "B6", "G53",
+                "G49", "G70", "G56", "I27", "X28", "O71"
+        );
+
+        List<String> gNumbers = new ArrayList<>();
+
+        someBingoNumbers.forEach(number -> {
+            if(number.toUpperCase().startsWith("G")) {
+                System.out.println(number);
+            }
+        });
+
+        gNumbers.sort((s1, s2)->s1.compareTo(s2));
+        gNumbers.forEach(s-> System.out.println(s));
     }
 
     public static String getAName(Function<Employee, String> function, Employee employee) {
