@@ -136,6 +136,24 @@ public class Main {
 
         gNumbers.sort((s1, s2)->s1.compareTo(s2));
         gNumbers.forEach(s-> System.out.println(s));
+
+        /*
+        Stream is a sequence of elements supporting sequential and parallel aggregate operations.
+        A stream is a set of object references. The stream method creates a stream from a collection.
+        Each object reference in the stream corresponds to an object in the collection and the ordering of the
+        object reference matches the ordering of the collection. When we want to use a stream that uses a collection
+        as a source, the stream method will always be the first call.
+        Any stream operations that we use have to meet two requirements:
+        1. They must be non-interfering, which means that they don't change the stream source in any way.
+        2. They must be stateless, so the result of an operation can't depend on any state outside of the operation.
+         */
+        System.out.println("-------Using Streams--------");
+        someBingoNumbers
+                .stream()
+                .map(String::toUpperCase) // Method reference, passed as a Function, same as s.toUpperCase()
+                .filter(s->s.startsWith("G"))
+                .sorted()
+                .forEach(s-> System.out.println(s));
     }
 
     public static String getAName(Function<Employee, String> function, Employee employee) {
