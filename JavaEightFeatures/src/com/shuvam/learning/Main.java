@@ -28,5 +28,12 @@ public class Main {
             if (employee.getAge() > 30)
                 System.out.println(employee.getName() + ": " + employee.getAge());
         });
+
+        System.out.println("Employees 30 and younger");
+        System.out.println("===================");
+        employeeList.forEach(employee -> {
+            if (employee.getAge()<= 30)
+                System.out.println(employee.getName() + ": " + employee.getAge());
+        });
     }
 }
