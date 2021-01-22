@@ -3,6 +3,7 @@ package com.shuvam.learning;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -53,8 +54,42 @@ public class Main {
             System.out.println(randomSupplier.get());
         }
 
+        /*
+        Functional Interfaces looked at so far:
+            Consumer does not return a value
+            Supplier doesn't accept any parameters
+            Predicate only returns true or false
+            Function interface fits the criteria that takes one parameter and returns a value, overriding the apply method
+        */
+
+        // syntax: Function<Input type, Output type>
+        Function<Employee, String> getLastName = employee -> {
+                return employee.getName().substring(employee.getName().indexOf( " " ) + 1);
+        };
+
+        Function<Employee, String> getFirstName = employee -> {
+            return employee.getName().substring(0, employee.getName().indexOf( " " ));
+        };
+
+        // Print LastName, FirstName
+        employeeList.forEach(e -> {
+                System.out.println(getLastName.apply(e) + ", " + getFirstName.apply(e));
+        });
+
+        Random random1 = new Random();
+        for(Employee employee:employeeList) {
+            if (random1.nextBoolean()) {
+                System.out.println("Last Name: " + getAName(getLastName, employee));
+            } else {
+                System.out.println("First Name: " + getAName(getFirstName, employee));
+            }
+        }
+
     }
 
+    public static String getAName(Function<Employee, String> function, Employee employee) {
+        return function.apply(employee);
+    }
     public static void printEmployeesByAge(List<Employee> employeeList,
                                            String ageText,
                                            Predicate<Employee> ageCondition) {
