@@ -2,6 +2,7 @@ package com.shuvam.learning;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Main {
 
@@ -19,21 +20,20 @@ public class Main {
         employeeList.add(snow);
         employeeList.add(jack);
 
-        // forEach method accepts a Functional Interface Consumer, with action method implemented - done as a lambda here
-        // Consumer interface requires its accept method to be implemented, doable via lambdas
+        // Predicate interface requires its test method to be implemented, done via lambda below
+        printEmployeesByAge(employeeList, "Employees over age 30", employee -> employee.getAge() > 30);
+        printEmployeesByAge(employeeList, "Employees of age 30 and under", employee -> employee.getAge() <= 30);
+    }
 
-        System.out.println("Employees over 30");
-        System.out.println("===================");
-        employeeList.forEach(employee -> {
-            if (employee.getAge() > 30)
-                System.out.println(employee.getName() + ": " + employee.getAge());
-        });
-
-        System.out.println("Employees 30 and younger");
-        System.out.println("===================");
-        employeeList.forEach(employee -> {
-            if (employee.getAge()<= 30)
-                System.out.println(employee.getName() + ": " + employee.getAge());
-        });
+    public static void printEmployeesByAge(List<Employee> employeeList,
+                                           String ageText,
+                                           Predicate<Employee> ageCondition) {
+        System.out.println(ageText);
+        System.out.println("====================");
+        for(Employee employee: employeeList) {
+            if(ageCondition.test(employee)) {
+                System.out.println(employee.getName());
+            }
+        }
     }
 }
