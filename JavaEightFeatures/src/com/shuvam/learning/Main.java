@@ -23,6 +23,12 @@ public class Main {
         // Predicate interface requires its test method to be implemented, done via lambda below
         printEmployeesByAge(employeeList, "Employees over age 30", employee -> employee.getAge() > 30);
         printEmployeesByAge(employeeList, "Employees of age 30 and under", employee -> employee.getAge() <= 30);
+        printEmployeesByAge(employeeList, "Employees of under age 25", new Predicate<Employee>() {
+            @Override
+            public boolean test(Employee employee) {
+                return employee.getAge() < 25;
+            }
+        });
     }
 
     public static void printEmployeesByAge(List<Employee> employeeList,
