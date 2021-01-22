@@ -2,7 +2,10 @@ package com.shuvam.learning;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.function.IntPredicate;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class Main {
 
@@ -29,6 +32,27 @@ public class Main {
                 return employee.getAge() < 25;
             }
         });
+
+        // Predicate that works only on integers
+        IntPredicate greaterThan15 = i -> i > 15;
+        IntPredicate lesserThan100 = i -> i < 100;
+        System.out.println(greaterThan15.test(20)); // true
+        System.out.println(greaterThan15.test(5)); // false
+
+        // Predicates can be chained together
+        // Predicate also contains and, or, negate and isEqual methods
+        // The more specific Predicate interfaces do not contain isEqual method, but everything else
+        System.out.println(greaterThan15.and(lesserThan100).test(20)); // false
+        System.out.println(greaterThan15.and(lesserThan100).test(105)); // true
+
+        // Using a Supplier interface whose get method (taking no args) is implemented via lambdas, to return random values
+        Random random = new Random();
+        Supplier<Integer> randomSupplier = () -> random.nextInt(1000);
+
+        for(int i = 0; i<10; i++) {
+            System.out.println(randomSupplier.get());
+        }
+
     }
 
     public static void printEmployeesByAge(List<Employee> employeeList,
