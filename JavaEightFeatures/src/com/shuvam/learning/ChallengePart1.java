@@ -56,13 +56,21 @@ public class ChallengePart1 {
         return lambdaFunction;
     }
 
-    public static String challenge4(Function<String, String> function, String inputString) {
+    public static String challenge4And5(Function<String, String> function, String inputString) {
         return function.apply(inputString);
+    }
+
+    public static String challenge6() {
+        Supplier<String> iLoveJava = () -> "I love Java";
+        return iLoveJava.get();
     }
 
     public static void main(String[] args) {
         challenge1();
         Function f = challenges2And3("1234567890");
-        System.out.println("Challenge 4 result: "+ challenge4(f, "1234567890"));
+        String result = challenge4And5(f, "1234567890");
+        System.out.println("Challenge 4/5 result: " + result);
+        result = challenge6();
+        System.out.println("Challenge 6 result: " + result);
     }
 }
