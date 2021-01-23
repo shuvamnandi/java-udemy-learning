@@ -1,4 +1,4 @@
-package com.shuvam.learning;
+package com.shuvam.learning.shopping;
 
 import java.util.Map;
 
@@ -88,18 +88,41 @@ public class StockListProgram {
 
     public static int sellItem(ShoppingBasket basket, String item, int quantity) {
         StockItem stockItem = stockList.get(item);
-        if(stockItem == null) {
+        if (stockItem == null) {
             System.out.println("We don't sell " + item);
             return 0;
         }
-        if(stockList.sellStock(item, quantity) != 0) {
-            basket.addToBasket(stockItem, quantity);
-            System.out.println("Item " + item + " added to shopping basket. Quantity in basket: " + quantity);
-            return quantity;
+        if (stockList.reserveStock(item, quantity) != 0) {
+            int quantityAdded = basket.addToBasket(stockItem, quantity);
+            System.out.println("Item " + item + " added to shopping basket. Quantity in basket: " + quantityAdded);
+            return quantityAdded;
         } else {
             System.out.println("Stock finished. Item " + item + " could not be added to shopping basket. Quantity in basket: " + quantity);
         }
         return 0;
+    }
+
+    public static int removeItem(ShoppingBasket basket, String item, int quantity) {
+        StockItem stockItem = stockList.get(item);
+        if (stockItem == null) {
+            System.out.println("We don't sell " + item);
+            return 0;
+        }
+        if (basket.removeFromBasket(stockItem, quantity) == quantity) {
+            int quantityRemoved = stockList.unreserveStock(item, quantity);
+            System.out.println("Item " + item + " removed from shopping basket. Quantity removed: " + stockItem);
+            return quantityRemoved;
+        } else {
+            System.out.println("Stock finished. Item " + item + " could not be added to shopping basket. Quantity in basket: " + quantity);
+        }
+        return 0;
+    }
+
+    public static void checkoutBasket(ShoppingBasket basket) {
+        for (Map.Entry<StockItem, Integer> item: basket.getBasket().entrySet()) {
+            stockList.sellStock(item.getKey().getName(), item.getValue());
+        }
+        basket.clearBasket();
     }
 
 }

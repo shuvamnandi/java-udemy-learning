@@ -1,6 +1,4 @@
-package com.shuvam.learning;
-
-import com.sun.xml.internal.ws.wsdl.writer.document.soap.Body;
+package com.shuvam.learning.heavenlybody;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +8,7 @@ public abstract class HeavenlyBody {
     private final double orbitalPeriod;
     private final Set<HeavenlyBody> satellites;
 
-    protected enum BodyTypes{
+    public enum BodyTypes{
         STAR,
         PLANET,
         DWARF_PLANET,

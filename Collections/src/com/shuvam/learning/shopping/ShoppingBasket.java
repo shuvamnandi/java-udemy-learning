@@ -1,4 +1,4 @@
-package com.shuvam.learning;
+package com.shuvam.learning.shopping;
 
 import java.util.Collections;
 import java.util.Map;
@@ -22,6 +22,27 @@ public class ShoppingBasket {
             return inBasket;
         }
         return 0;
+    }
+
+    public int removeFromBasket(StockItem item, int quantity) {
+        if(item != null && quantity > 0) {
+            int inBasket = basket.getOrDefault(item, 0);
+            int newQuantity = inBasket + quantity;
+
+            if (newQuantity > 0) {
+                basket.put(item, newQuantity);
+                return quantity;
+            } else if (newQuantity == 0) {
+                basket.remove(item);
+                return quantity;
+            }
+        }
+        return 0;
+    }
+
+    public void clearBasket() {
+        // Easier then removing all items one by one
+        this.basket.clear();
     }
 
     public String getName() {

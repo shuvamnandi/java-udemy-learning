@@ -1,5 +1,9 @@
 package com.shuvam.learning;
 
+import com.shuvam.learning.heavenlybody.HeavenlyBody;
+import com.shuvam.learning.heavenlybody.Moon;
+import com.shuvam.learning.heavenlybody.Planet;
+
 import java.util.*;
 
 public class Main {
@@ -286,7 +290,4 @@ public class Main {
         setExamples();
         // equalsSubclassingProblems();
     }
-
-
-
 }

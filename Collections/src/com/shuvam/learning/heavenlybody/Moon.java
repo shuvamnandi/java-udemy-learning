@@ -1,4 +1,6 @@
-package com.shuvam.learning;
+package com.shuvam.learning.heavenlybody;
+
+import com.shuvam.learning.heavenlybody.HeavenlyBody;
 
 public class Moon extends HeavenlyBody {
     public Moon(String name, double orbitalPeriod) {

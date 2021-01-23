@@ -1,4 +1,4 @@
-package com.shuvam.learning;
+package com.shuvam.learning.heavenlybody;
 
 public class SetChallenge {
     /*
