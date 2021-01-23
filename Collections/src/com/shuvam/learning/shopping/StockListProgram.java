@@ -9,7 +9,8 @@ public class StockListProgram {
     ordering of items in a HashMap or HashSet is chaotic but the linked versions maintain insertion order.
      */
     private static StockList stockList = new StockList();
-    private static ShoppingBasket basket = new ShoppingBasket("Shuvam's Basket");
+    private static final ShoppingBasket shuvamBasket = new ShoppingBasket("Shuvam's Basket");
+    private static final ShoppingBasket neethuBasket = new ShoppingBasket("Neethu's basket");
 
     public static void main(String[] args) {
         StockItem temp = new StockItem("Bread", 0.86 , 100);
@@ -48,42 +49,74 @@ public class StockListProgram {
             System.out.println(key);
         }
 
-        sellItem(basket, "Car", 1);
-        System.out.println(basket);
+        sellItem(shuvamBasket, "Car", 1);
+        System.out.println(shuvamBasket);
 
-        sellItem(basket, "Car", 1);
-        System.out.println(basket);
+        sellItem(shuvamBasket, "Car", 1);
+        System.out.println(shuvamBasket);
 
-        sellItem(basket, "Car", 2);
-        System.out.println(basket);
+        sellItem(shuvamBasket, "Car", 2);
+        System.out.println(shuvamBasket);
 
-        sellItem(basket, "Spanner", 1);
-        System.out.println(basket);
+        sellItem(shuvamBasket, "Spanner", 1);
+        System.out.println(shuvamBasket);
 
-        sellItem(basket, "Juice", 5);
-        System.out.println(basket);
+        sellItem(shuvamBasket, "Juice", 5);
+        System.out.println(shuvamBasket);
 
-        sellItem(basket, "Cup", 12);
-        System.out.println(basket);
+        sellItem(shuvamBasket, "Cup", 12);
+        System.out.println(shuvamBasket);
 
-        sellItem(basket, "Bread", 2);
-        System.out.println(basket);
+        sellItem(shuvamBasket, "Bread", 2);
+        System.out.println(shuvamBasket);
 
-        sellItem(basket, "Towel", 1);
-        System.out.println(basket);
+        sellItem(shuvamBasket, "Towel", 1);
+        System.out.println(shuvamBasket);
 
         System.out.println(stockList);
         // stockList.Items().put(temp.getName(), temp); // throws an UnsupportedOperationException
 
         // Individual objects inside the map can still be accessed and modified, with two different ways of accessing the Car item
-        stockList.Items().get("Car").adjustStock(2000);
-        stockList.get("Car").adjustStock(-1000);
-        System.out.println(stockList);
+        // stockList.Items().get("Car").adjustStock(2000);
+        // stockList.get("Car").adjustStock(-1000);
+        // System.out.println(stockList);
 
         // Both String and Double are immutable
-        for(Map.Entry<String, Double> priceEntry: stockList.PriceList().entrySet()) {
-            System.out.println(priceEntry.getKey() + " costs " + priceEntry.getValue());
-        }
+        // for(Map.Entry<String, Double> priceEntry: stockList.PriceList().entrySet()) {
+        //     System.out.println(priceEntry.getKey() + " costs " + priceEntry.getValue());
+        // }
+        System.out.println("================================");
+        sellItem(neethuBasket, "Cup", 100);
+        sellItem(neethuBasket, "Chair", 3);
+        removeItem(neethuBasket, "Cup", 1);
+        sellItem(neethuBasket, "Cup", 1);
+        System.out.println(neethuBasket);
+
+        removeItem(shuvamBasket, "Car", 1);
+        removeItem(shuvamBasket, "Cup", 9);
+        removeItem(shuvamBasket, "Car", 1);
+        System.out.println("Cars removed: " + removeItem(shuvamBasket, "Car", 1)); // Should not remove any
+
+        System.out.println(shuvamBasket);
+
+        removeItem(shuvamBasket, "Bread", 2);
+        removeItem(shuvamBasket, "Cup", 3);
+        removeItem(shuvamBasket, "Juice", 5);
+        removeItem(shuvamBasket, "Cup", 1);
+        removeItem(shuvamBasket, "Towel", 1);
+
+        System.out.println(shuvamBasket); // should be empty
+
+        System.out.println("\nDisplay stock list before and after checkout");
+
+        System.out.println(neethuBasket);
+        System.out.println(stockList);
+        checkoutBasket(neethuBasket);
+        System.out.println(neethuBasket);
+        System.out.println(stockList);
+
+        System.out.println(shuvamBasket);
+
     }
 
     public static int sellItem(ShoppingBasket basket, String item, int quantity) {
@@ -119,6 +152,7 @@ public class StockListProgram {
     }
 
     public static void checkoutBasket(ShoppingBasket basket) {
+        System.out.println("\nTotal amount to be paid: " + basket.computeBasketValue());
         for (Map.Entry<StockItem, Integer> item: basket.getBasket().entrySet()) {
             stockList.sellStock(item.getKey().getName(), item.getValue());
         }

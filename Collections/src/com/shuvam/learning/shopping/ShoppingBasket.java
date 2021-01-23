@@ -27,7 +27,7 @@ public class ShoppingBasket {
     public int removeFromBasket(StockItem item, int quantity) {
         if(item != null && quantity > 0) {
             int inBasket = basket.getOrDefault(item, 0);
-            int newQuantity = inBasket + quantity;
+            int newQuantity = inBasket - quantity;
 
             if (newQuantity > 0) {
                 basket.put(item, newQuantity);
@@ -51,6 +51,14 @@ public class ShoppingBasket {
 
     public Map<StockItem, Integer> getBasket() {
         return Collections.unmodifiableMap(basket);
+    }
+
+    public double computeBasketValue() {
+        double totalCost = 0.0;
+        for(Map.Entry<StockItem, Integer> item : basket.entrySet()) {
+            totalCost += item.getKey().getPrice() * item.getValue();
+        }
+        return totalCost;
     }
 
     @Override
