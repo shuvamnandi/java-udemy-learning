@@ -19,7 +19,7 @@ public class Main {
         Employee john = new Employee("John Doe", 30);
         Employee tim = new Employee("Tim Buchalka", 21);
         Employee snow = new Employee("Snow White", 22);
-        Employee jack = new Employee("Jack Hill", 40);
+        Employee jack = new Employee("Jack Hill", 21);
         Employee red = new Employee("Red Ridinghood", 35);
         Employee charming = new Employee("Prince Charming", 31);
 
@@ -156,7 +156,7 @@ public class Main {
         operation. This method of collect usage accepts a Collector which is an interface to the java.util.stream
         package, which maps the collector to the arguments required.
          */
-        List<Employee> departmentEmployees1 = departments.stream()
+        List<Employee> departmentEmployeesCollect1 = departments.stream()
                 .flatMap(department -> department.getEmployeeList().stream())
                 .collect(Collectors.toList());
 
@@ -166,9 +166,40 @@ public class Main {
         the collect method. E.g., if we wanted to end up with an ArrayList rather than a list, we can use the more
         specific collect version of the method to actually do this.
          */
-        List<Employee> departmentEmployees2 = departments.stream()
+        List<Employee> departmentEmployeesCollect2 = departments.stream()
                 .flatMap(department -> department.getEmployeeList().stream())
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+
+        Map<Integer, List<Employee>> groupedByAge = departments
+                                                    .stream()
+                                                    .flatMap(department->department.getEmployeeList().stream())
+                                                    .collect(Collectors.groupingBy(employee -> employee.getAge()));
+
+        groupedByAge.forEach((age, employee) -> System.out.println(age + ":" + employee));
+
+        departments.stream()
+                .flatMap(department -> department.getEmployeeList().stream())
+                .reduce((e1, e2) -> e1.getAge() < e2.getAge() ? e1 : e2 )
+                .ifPresent(System.out::println);
+
+        /*
+        Few notes about streams:
+        1. We can't reuse them - if we try to, once we've called a terminal operation on a stream, we will receive an
+        Illegal state exception if we try to operate on that stream again.
+        2. Operations in streams are lazily evaluated. Intermediate operations are not performed until there's a
+        terminal operation.
+        3. We can use more specific stream interfaces when we're working with lists of numbers, e.g. int stream,
+        long stream and double stream. These interfaces have additional methods like sum, min, max and a few others
+        that are useful when working with numbers.
+         */
+
+        long c = Stream.of("ABC", "AC", "BAA", "CCCC", "XY", "STT", "POC")
+                .filter(s-> {
+                    System.out.println(s);
+                    return s.length() == 3;
+                }).count(); // Without this terminal condition, the stream is not evaluated
+
+        System.out.println("Count of elements with 3 characters: " + c);
 
     }
 
