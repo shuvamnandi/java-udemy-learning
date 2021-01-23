@@ -8,4 +8,4 @@ Contents
 4. Java Generics
 5. Collections
 6. Concurrency
-7. Java 8 Features: Lambdas, Predicates, Suppliers, Functions, Streams
+7. Java 8 Features: Lambdas, Consumer, Predicate, Supplier, Function, UnaryOperator, Streams
