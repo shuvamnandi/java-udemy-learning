@@ -60,9 +60,10 @@ public class ChallengePart1 {
         return function.apply(inputString);
     }
 
-    public static String challenge6() {
+    public static String challenge6And7() {
         Supplier<String> iLoveJava = () -> "I love Java";
-        return iLoveJava.get();
+        String supplierResult = iLoveJava.get();
+        return supplierResult;
     }
 
     public static void main(String[] args) {
@@ -70,7 +71,7 @@ public class ChallengePart1 {
         Function f = challenges2And3("1234567890");
         String result = challenge4And5(f, "1234567890");
         System.out.println("Challenge 4/5 result: " + result);
-        result = challenge6();
-        System.out.println("Challenge 6 result: " + result);
+        result = challenge6And7();
+        System.out.println("Challenge 6/7 result: " + result);
     }
 }
