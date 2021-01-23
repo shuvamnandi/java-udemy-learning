@@ -3,6 +3,7 @@ package com.shuvam.learning;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ChallengePart2<c> {
 
@@ -79,14 +80,47 @@ public class ChallengePart2<c> {
 
     }
 
+    public static void challenge13() {
+        // Use Streams
+        Function<String, String> toSentenceCase = name ->
+                name.substring(0, 1).toUpperCase().concat(name.substring(1));
+
+        topNames2015.stream()
+                .map(toSentenceCase)
+                .peek(s->System.out.println("Peeking: " + s))
+                .sorted(String::compareTo)
+                .forEach(System.out::println); // Nothing is printed out if this terminal condition was not present
+
+    }
+
+
+    public static void challenge14() {
+        // Use Streams
+        Function<String, String> toSentenceCase = name ->
+                name.substring(0, 1).toUpperCase().concat(name.substring(1));
+
+        List<String> names = topNames2015.stream()
+                .map(toSentenceCase)
+                .peek(s->System.out.println("Peeking: " + s))
+                .sorted(String::compareTo)
+                .collect(Collectors.toList());
+
+        names.forEach(System.out::println);
+
+    }
+
     public static void main(String[] args) {
-        System.out.println("--------------");
+        System.out.println("----Lambdas----");
         challenge9();
-        System.out.println("--------------");
+        System.out.println("----Method references---");
         challenge10();
-        System.out.println("--------------");
+        System.out.println("----Streams---");
         challenge11();
-        System.out.println("--------------");
+        System.out.println("----Filter-----");
         challenge12();
+        System.out.println("----Peek-----");
+        challenge13();
+        System.out.println("----Collect-----");
+        challenge14();
     }
 }
