@@ -2,6 +2,7 @@ package com.shuvam.learning;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
@@ -62,10 +63,10 @@ public class Main {
 
         /*
         Functional Interfaces looked at so far:
-            Consumer does not return a value
-            Supplier doesn't accept any parameters
-            Predicate only returns true or false
-            Function interface fits the criteria that takes one parameter and returns a value, overriding the apply method
+            Consumer does not return a value (action)
+            Supplier doesn't accept any parameters (get)
+            Predicate only returns true or false (test)
+            Function interface fits the criteria that takes one parameter and returns a value (apply)
         */
 
         // syntax: Function<Input type, Output type>
@@ -119,10 +120,63 @@ public class Main {
         };
         System.out.println("Employee is older than 20: " + employeeAgeCheck.test(employeeList.get(1), 20));
 
+        streamsPartOne();
+
+        Department hr = new Department("HR");
+        hr.addEmployee(jack);
+        hr.addEmployee(snow);
+        hr.addEmployee(john);
+
+        Department accounting = new Department("Accounting");
+        accounting.addEmployee(tim);
+        accounting.addEmployee(charming);
+
+        List<Department> departments = new ArrayList<>();
+        departments.add(hr);
+        departments.add(accounting);
+
+        /*
+         Use flatMap method that requires a function that returns a stream
+         For each department, we call the getEmployees method which returns a list on which we call the stream method
+         to return a stream of employees. Now the items in this stream were added to the stream that will be returned
+         from the flatMap method. In the case of a HR department, we have gone from one department object to 3 Employee
+         objects. Thi method is called flat map because it is often used to flatten nested lists. Here, we have lists
+         of employees nested within the department list, so the flatMap method is the one to use when we want to perform
+         operations on the list but the list isn't the source. We use the method to create a stream of all the objects
+         in those lists.
+         */
+        departments.stream()
+                .flatMap(department -> department.getEmployeeList().stream())
+                .forEach(System.out::println); // Prints the toString equivalent
+                //.forEach(s->System.out.println(s));
+
+        /*
+        Store the contents thus generated using Stream::collect method
+        The first version of the collect method stores the contents of the stream operations used as a terminal
+        operation. This method of collect usage accepts a Collector which is an interface to the java.util.stream
+        package, which maps the collector to the arguments required.
+         */
+        List<Employee> departmentEmployees1 = departments.stream()
+                .flatMap(department -> department.getEmployeeList().stream())
+                .collect(Collectors.toList());
+
+        /*
+        The second version of the collect method expects 3 arguments - a supplier, a BiConsumer accumulator and a
+        BiConsumer combiner. These arguments must be specific about how we want the items to be added to the result of
+        the collect method. E.g., if we wanted to end up with an ArrayList rather than a list, we can use the more
+        specific collect version of the method to actually do this.
+         */
+        List<Employee> departmentEmployees2 = departments.stream()
+                .flatMap(department -> department.getEmployeeList().stream())
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+
+    }
+
+    public static void streamsPartOne() {
         System.out.println("-------Stream Example--------");
         List<String> someBingoNumbers = Arrays.asList(
-                    "N40", "N36", "B12", "A30", "B6", "G53",
-                    "G49", "G70", "G56", "I27", "X28", "O71"
+                "N40", "N36", "B12", "A30", "B6", "G53",
+                "G49", "G70", "G56", "I27", "X28", "O71"
         );
 
         List<String> gNumbers = new ArrayList<>();
@@ -166,9 +220,10 @@ public class Main {
         System.out.println("------------------------------------------");
         System.out.println("Concatenated stream # of distinct items: " +
                 concatStream
-                    .distinct()
-                    .peek(s-> System.out.println(s)) // peek for debugging purposes, which accepts a Consumer interface with action method implemented
-                    .count());
+                        .distinct()
+                        .peek(s-> System.out.println(s)) // peek for debugging purposes, which accepts a Consumer interface with action method implemented
+                        .count());
+
     }
 
     public static String getAName(Function<Employee, String> function, Employee employee) {
