@@ -30,7 +30,7 @@ public class ChallengePart1 {
         new Thread(runnableLambda).start();
     }
 
-    public static void challenges2And3(String s) {
+    public static Function challenges2And3(String s) {
         // Challenge 2
         /*
         StringBuilder returnVal = new StringBuilder();
@@ -52,12 +52,17 @@ public class ChallengePart1 {
         };
 
         // Challenge 3
+        System.out.println("Challenge 3 result: " + lambdaFunction.apply(s));
+        return lambdaFunction;
+    }
 
-        System.out.println("Function run result: " + lambdaFunction.apply(s));
+    public static String challenge4(Function<String, String> function, String inputString) {
+        return function.apply(inputString);
     }
 
     public static void main(String[] args) {
         challenge1();
-        challenges2And3("1234567890");
+        Function f = challenges2And3("1234567890");
+        System.out.println("Challenge 4 result: "+ challenge4(f, "1234567890"));
     }
 }
