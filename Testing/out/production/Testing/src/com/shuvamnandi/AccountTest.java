@@ -21,40 +21,50 @@ class AccountTest {
     }
 
     @Test
-    void deposit() {
+    public void deposit() {
         double balance = account.deposit(200.00, true);
         assertEquals(1200.00, balance, 0);
         assertEquals(1200.00, account.getBalance());
     }
 
     @Test
-    void withdraw_legal() {
+    public void withdraw_legal() {
         account.withdraw(600.00, true);
         assertEquals(400.00, account.getBalance());
         assertEquals(400.00, account.getBalance());
     }
 
     @Test
-    void withdraw_illegal() {
+    public void withdraw_illegal() {
         assertThrows(IllegalArgumentException.class, () -> account.withdraw(600, false));
         assertEquals(1000.00, account.getBalance());
         assertEquals(1000.00, account.getBalance());
     }
 
     @Test
-    void getBalance_deposit() {
+    public void withdraw_illegal_old_junit() {
+        try {
+            account.withdraw(600, false);
+            fail("Should have thrown an IllegalArgumentException");
+        } catch (IllegalArgumentException e ) {
+            System.out.println("Exception was caught, test is passed");
+        }
+    }
+
+    @Test
+    public void getBalance_deposit() {
         account.deposit(200.00, true);
         assertEquals(1200.00, account.getBalance());
     }
 
     @Test
-    void getBalance_withdraw() {
+    public void getBalance_withdraw() {
         account.withdraw(100.00, true);
         assertEquals(900.00, account.getBalance());
     }
 
     @Test
-    void isChecking_false() {
+    public void isChecking_false() {
         assertFalse(account.isChecking());
     }
 
