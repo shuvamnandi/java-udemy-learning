@@ -1,6 +1,12 @@
 package com.shuvamnandi;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,12 +49,27 @@ class UtilitiesTest {
 
     @Test
     public void convertor_throws() {
-        assertThrows(ArithmeticException.class, () -> utilities.convertor(10, 10));
+        assertThrows(ArithmeticException.class, () -> utilities.convertor(10, 0));
     }
 
     @Test
     public void nullIfOddLength() {
         assertNull(utilities.nullIfOddLength("hello"));
         assertEquals("hello ", utilities.nullIfOddLength("hello "));
+    }
+
+    public static Collection<Object> testConditions() {
+        return Arrays.asList(new Object[][]{
+                {"ABCDEFF", "ABCDEF"},
+                {"AB88EFFG", "AB8EFG"},
+                {"112233445566", "123456"},
+                {"A", "A"},
+        });
+    }
+
+    @ParameterizedTest
+    @MethodSource("testConditions")
+    public void removePairs(String input, String expected) {
+        assertEquals(expected, utilities.removePairs(input));
     }
 }

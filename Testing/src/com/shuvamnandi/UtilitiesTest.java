@@ -1,6 +1,12 @@
 package com.shuvamnandi;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,6 +40,21 @@ class UtilitiesTest {
         assertEquals("A", utilities.removePairs("A"));
         assertEquals("AB", utilities.removePairs("AB"));
         assertNull(utilities.removePairs(null), "Did not get null returned" );
+    }
+
+    public static Collection<Object> testConditions() {
+        return Arrays.asList(new Object[][]{
+                {"ABCDEFF", "ABCDEF"},
+                {"AB88EFFG", "AB8EFG"},
+                {"112233445566", "123456"},
+                {"A", "A"},
+        });
+    }
+
+    @ParameterizedTest
+    @MethodSource("testConditions")
+    public void removePairs(String input, String expected) {
+        assertEquals(expected, utilities.removePairs(input));
     }
 
     @Test
