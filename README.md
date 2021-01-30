@@ -9,3 +9,4 @@ Contents
 5. Collections
 6. Concurrency
 7. Java 8 Features: Lambdas, Consumer, Predicate, Supplier, Function, UnaryOperator, Streams
+8. Testing with JUnit 5
