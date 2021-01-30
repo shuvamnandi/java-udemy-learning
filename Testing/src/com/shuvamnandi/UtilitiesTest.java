@@ -38,11 +38,12 @@ class UtilitiesTest {
 
     @Test
     void convertor() {
-        fail("Not implemented");
+        assertEquals(300, utilities.convertor(10, 5));
     }
 
     @Test
     void nullIfOddLength() {
-        fail("Not implemented");
+        assertNull(utilities.nullIfOddLength("hello"));
+        assertEquals("hello ", utilities.nullIfOddLength("hello "));
     }
 }

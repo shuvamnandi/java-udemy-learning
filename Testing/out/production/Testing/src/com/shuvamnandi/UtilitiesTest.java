@@ -22,7 +22,7 @@ class UtilitiesTest {
     void everyNthChar() {
         assertArrayEquals("el".toCharArray(), utilities.everyNthChar("hello".toCharArray(), 2));
         assertArrayEquals("l r".toCharArray(), utilities.everyNthChar("hello world".toCharArray(), 3));
-        assertArrayEquals("hello".toCharArray(), utilities.everyNthChar("hello".toCharArray(), 12));
+        assertArrayEquals("hello".toCharArray(), utilities.everyNthChar("hello".toCharArray(), 8));
     }
 
     @Test
@@ -38,11 +38,12 @@ class UtilitiesTest {
 
     @Test
     void convertor() {
-        fail("Not implemented");
+        assertEquals(300, utilities.convertor(10, 5));
     }
 
     @Test
     void nullIfOddLength() {
-        fail("Not implemented");
+        assertNull(utilities.nullIfOddLength("hello"));
+        assertEquals("hello ", utilities.nullIfOddLength("hello "));
     }
 }
