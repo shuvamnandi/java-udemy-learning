@@ -22,6 +22,9 @@ public class Utilities {
     // "ABBCDEEF" -> "ABCDEF"
     // "ABCBDEEF" -> "ABCBDEF"
     public String removePairs(String source) {
+        if (source == null) {
+            return null;
+        }
         if (source.length() < 2) {
             return source;
         }

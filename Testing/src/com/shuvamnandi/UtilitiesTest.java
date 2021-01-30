@@ -20,13 +20,20 @@ class UtilitiesTest {
 
     @Test
     void everyNthChar() {
-        fail("Not implemented");
+        assertArrayEquals("el".toCharArray(), utilities.everyNthChar("hello".toCharArray(), 2));
+        assertArrayEquals("l r".toCharArray(), utilities.everyNthChar("hello world".toCharArray(), 3));
+        assertArrayEquals("hello".toCharArray(), utilities.everyNthChar("hello".toCharArray(), 8));
     }
 
     @Test
     void removePairs() {
         assertEquals("ABCDEF", utilities.removePairs("AABCDDEFF"));
-        assertEquals("ABCBDEF", utilities.removePairs("AABCCBDDEFF"));
+        assertEquals("ABCBDEF", utilities.removePairs("AABCCCBDDDDEFF"));
+        assertEquals("", utilities.removePairs(""));
+        assertEquals("A", utilities.removePairs("AA"));
+        assertEquals("A", utilities.removePairs("A"));
+        assertEquals("AB", utilities.removePairs("AB"));
+        assertNull(utilities.removePairs(null), "Did not get null returned" );
     }
 
     @Test
