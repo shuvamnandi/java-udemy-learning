@@ -9,24 +9,24 @@ class UtilitiesTest {
     Utilities utilities;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         utilities = new Utilities();
     }
 
     @AfterEach
-    void tearDown() {
+    public void tearDown() {
         System.out.println("tearDown() called");
     }
 
     @Test
-    void everyNthChar() {
+    public void everyNthChar() {
         assertArrayEquals("el".toCharArray(), utilities.everyNthChar("hello".toCharArray(), 2));
         assertArrayEquals("l r".toCharArray(), utilities.everyNthChar("hello world".toCharArray(), 3));
         assertArrayEquals("hello".toCharArray(), utilities.everyNthChar("hello".toCharArray(), 8));
     }
 
     @Test
-    void removePairs() {
+    public void removePairs() {
         assertEquals("ABCDEF", utilities.removePairs("AABCDDEFF"));
         assertEquals("ABCBDEF", utilities.removePairs("AABCCCBDDDDEFF"));
         assertEquals("", utilities.removePairs(""));
@@ -37,12 +37,17 @@ class UtilitiesTest {
     }
 
     @Test
-    void convertor() {
+    public void convertor_pass() {
         assertEquals(300, utilities.convertor(10, 5));
     }
 
     @Test
-    void nullIfOddLength() {
+    public void convertor_throws() {
+        assertThrows(ArithmeticException.class, () -> utilities.convertor(10, 0));
+    }
+
+    @Test
+    public void nullIfOddLength() {
         assertNull(utilities.nullIfOddLength("hello"));
         assertEquals("hello ", utilities.nullIfOddLength("hello "));
     }
