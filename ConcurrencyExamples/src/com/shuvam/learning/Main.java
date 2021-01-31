@@ -2,6 +2,10 @@ package com.shuvam.learning;
 
 public class Main {
 
+    static {
+        System.out.println("before...");
+    }
+
     public static void main(String[] args) {
         Thread myThread = new Thread(new InterruptExample(), "myThread");
         // myThread.setDaemon(true);
@@ -19,5 +23,31 @@ public class Main {
         for(int i: indices) {
             System.out.println(i);
         }
+
+        String i;
+        System.out.println(200+300+"Int I: ");
+        System.out.println(""+200+300+"Int I: ");
+
+        BiCounter biCounter = new BiCounter();
+        Thread t1 = new Thread(()->{
+            biCounter.incrementJ();
+            biCounter.incrementI();
+        });
+
+        Thread t2 = new Thread(()->{
+            biCounter.incrementI();
+            biCounter.incrementJ();
+        });
+
+        t1.start();
+        t2.start();
+        try{
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+
+        }
+
+        System.out.println(biCounter.getI() +" " + biCounter.getJ());
     }
 }
